@@ -1,0 +1,306 @@
+C51 COMPILER V9.60.0.0   LCD12864                                                          12/07/2023 10:33:06 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LCD12864
+OBJECT MODULE PLACED IN lcd12864.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE lcd12864.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include"lcd12864.h"
+   2          
+   3          void LCD12864_Delay1ms(uint c)
+   4          {
+   5   1        uchar a,b;
+   6   1        for(;c>0; c--)
+   7   1        {
+   8   2          for(b=199; b>0; b--)
+   9   2          {
+  10   3            for(a=1; a>0; a--);
+  11   3          }
+  12   2        }
+  13   1      }
+  14          
+  15          /************************************************************************************
+  16          * Tên chuc nang: LCD12864_Busy
+  17          * Chuc nang: Kium tra xem LCD có ban không
+  18          * Ðau vào: Không có
+  19          * Ðau ra: 1 hoac 0 (1 nghia là không ban, 0 nghia là ban)
+  20          ************************************************************************************/
+  21          
+  22          uchar LCD12864_Busy(void)
+  23          {
+  24   1        uchar i = 0;
+  25   1      
+  26   1        LCD12864_RS = 0; //Chon lenh
+  27   1        LCD12864_RW = 1; //Chon de doc
+  28   1      
+  29   1        LCD12864_EN = 1;
+  30   1        LCD12864_Delay1ms(1);
+  31   1      
+  32   1        while((LCD12864_DATAPORT & 0x80) == 0x80) //Phát hien giá tri dã doc
+  33   1        {
+  34   2          i++;
+  35   2          if (i > 100)
+  36   2          {
+  37   3            LCD12864_EN = 0;
+  38   3            return 0; //Neu thoi gian cho` vuot quá, tra ve 0 de báo loi.
+  39   3          }
+  40   2        }
+  41   1      
+  42   1        LCD12864_EN = 0;
+  43   1      
+  44   1        return 1;
+  45   1      }
+  46          
+  47          /************************************************************************************
+  48          * Tên hàm: LCD12864_WriteCmd
+  49          * Chuc nang: viet lenh
+  50          * Ðau vào: cmd
+  51          * Ðau ra: Không có
+  52          ************************************************************************************/
+  53          
+  54          void LCD12864_WriteCmd(uchar cmd)
+  55          {
+C51 COMPILER V9.60.0.0   LCD12864                                                          12/07/2023 10:33:06 PAGE 2   
+
+  56   1        uchar i;
+  57   1        i = 0;
+  58   1        while( LCD12864_Busy() == 0)
+  59   1        {
+  60   2          //LCD12864_Delay1ms(1);
+  61   2          i++;
+  62   2          if(i>100)
+  63   2          {
+  64   3            return; //thoát ra sau khi cho` doi
+  65   3          }
+  66   2        }
+  67   1        
+  68   1        LCD12864_RS = 0; //Chon lenh
+  69   1        LCD12864_RW = 0; //Chon ghi
+  70   1        LCD12864_EN = 0; //Thiet bi dau cuoi cho phép khoi tao
+  71   1      
+  72   1        LCD12864_DATAPORT = cmd; //Ðat du lieu
+  73   1      
+  74   1        LCD12864_EN = 1; // Thoi gian ghi
+  75   1        //LCD12864_Delay1ms(1);
+  76   1        LCD12864_EN = 0;
+  77   1      }
+  78          
+  79          /************************************************************************************
+  80          * Tên hàm: LCD12864_WriteData
+  81          * Chuc nang: ghi du lieu
+  82          * Ðau vào: dat
+  83          * Ðâu ra: Không có
+  84          ************************************************************************************/
+  85          
+  86          void LCD12864_WriteData(uchar dat)
+  87          {
+  88   1        uchar i;
+  89   1        i = 0;
+  90   1        while( LCD12864_Busy() == 0)
+  91   1        {
+  92   2          //LCD12864_Delay1ms(1);
+  93   2          i++;
+  94   2          if(i>100)
+  95   2          {
+  96   3            return; //thoát ra sau khi cho doi
+  97   3          }
+  98   2        }
+  99   1      
+ 100   1        LCD12864_RS = 1;//Chon du lieu
+ 101   1        LCD12864_RW = 0; //Chon ghi
+ 102   1        LCD12864_EN = 0; //Thiet bi dau cuoi cho phép khoi tao
+ 103   1      
+ 104   1        LCD12864_DATAPORT = dat; //Ðat du lieu
+ 105   1      
+ 106   1        LCD12864_EN = 1; // Thoi gian ghi
+ 107   1        //LCD12864_Delay1ms(1);
+ 108   1        LCD12864_EN = 0;
+ 109   1      }
+ 110          
+ 111          /***********************************************************************************
+ 112          * Tên hàm: LCD12864_ReadData
+ 113          * Chuc nang: doc du lieu
+ 114          * Ðau vào: Không có
+ 115          * Ðau ra: doc du lieu 8 bit
+ 116          ************************************************************************************/
+ 117          #ifdef LCD12864_PICTURE
+C51 COMPILER V9.60.0.0   LCD12864                                                          12/07/2023 10:33:06 PAGE 3   
+
+ 118          
+ 119          uchar LCD12864_ReadData(void)
+ 120          {
+ 121   1        uchar i, readValue;
+ 122   1        i = 0;
+ 123   1        while( LCD12864_Busy() == 0)
+ 124   1        {
+ 125   2          LCD12864_Delay1ms(1);
+ 126   2          i++;
+ 127   2          if(i>100)
+ 128   2          {
+ 129   3            return 0; //Thoát sau khi cho hon 10 giây
+ 130   3          }
+ 131   2        }
+ 132   1      
+ 133   1        LCD12864_RS = 1; //Chon lenh
+ 134   1        LCD12864_RW = 1;
+ 135   1        LCD12864_EN = 0;
+ 136   1        LCD12864_Delay1ms(1); //Cho
+ 137   1      
+ 138   1        LCD12864_EN = 1;
+ 139   1        LCD12864_Delay1ms(1);
+ 140   1        readValue = LCD12864_DATAPORT;
+ 141   1        LCD12864_EN = 0;
+ 142   1      
+ 143   1        return readValue;
+ 144   1      }
+ 145          
+ 146          #endif
+ 147          
+ 148          /************************************************************************************
+ 149          * Tên hàm: LCD12864_Init
+ 150          * Chuc nang: Khoi tao LCD12864
+ 151          * Ðau vào: Không có
+ 152          * Ðau ra: Không có
+ 153          ************************************************************************************/
+ 154          
+ 155          void LCD12864_Init()
+ 156          {
+ 157   1        LCD12864_PSB = 1; //Chon dau vào song song
+ 158   1        LCD12864_RST = 1;//dat lai
+ 159   1      
+ 160   1        LCD12864_WriteCmd(0x30); //Chon thao tác lenh co ban
+ 161   1        LCD12864_WriteCmd(0x0c); //Hien thi bat và tat con tro
+ 162   1        LCD12864_WriteCmd(0x01); //Xóa noi dung hien thi cua LCD12864
+ 163   1      }
+ 164          
+ 165          /************************************************************************************
+ 166          * Tên chuc nang: LCD12864_ClearScreen
+ 167          * Chuc nang: o che do ve, lenh 01H cua LCD12864 không xóa duoc màn hình nên ban phai tu viet hàm rõ ràng h
+             -on.
+ 168          * Chuc nang màn hình
+ 169          * Ðau vào: Không có
+ 170          * Ðau ra: Không có
+ 171          ************************************************************************************/
+ 172          #ifdef LCD12864_PICTURE
+ 173          
+ 174          void LCD12864_ClearScreen(void)
+ 175          {
+ 176   1        uchar i,j;
+ 177   1      
+ 178   1        LCD12864_WriteCmd(0x34); //Bat tap lenh mo rong
+C51 COMPILER V9.60.0.0   LCD12864                                                          12/07/2023 10:33:06 PAGE 4   
+
+ 179   1      
+ 180   1        for(i=0;i<32;i++) //Vì LCD có 32 toa do doc nên viet ba muoi hai lan
+ 181   1        { 
+ 182   2          LCD12864_WriteCmd(0x80+i); //Ðau tiên ghi giá tri toa do doc Y
+ 183   2          LCD12864_WriteCmd(0x80); //Viet giá tri cua bieu do X
+ 184   2          for(j=0;j<32;j++) // có 16 biT và moi biT cung ghi hai byte du lieu
+ 185   2          { //Chi can viet 32 lan, khi viet 2 byte thì bieu do
+ 186   3            //se tu dong thêm 1 nên không can ghi lai dia chi.
+ 187   3            LCD12864_WriteData(0xFF); 
+ 188   3          }
+ 189   2        }
+ 190   1      
+ 191   1        LCD12864_WriteCmd(0x36); //Mo màn hình ve theo lenh mo rong 0x36
+ 192   1        LCD12864_WriteCmd(0x30); //Khôi phuc tap lenh co ban
+ 193   1      }
+ 194          
+ 195          #endif
+ 196          /************************************************************************************
+ 197          * Tên hàm: LCD12864_SetWindow
+ 198          * Chuc nang: Thiet lap toa do hien thi o che do lenh co bon. Luu ý: x là hàng cài dat, y là cot cài dat
+ 199          * Ðau vào: x, y
+ 200          * Ðau ra: Không có
+ 201          ************************************************************************************/
+ 202          
+ 203          void LCD12864_SetWindow(uchar x, uchar y)
+ 204          {
+ 205   1        uchar pos;
+ 206   1      
+ 207   1        if(x == 0) //Ðia chi cua dòng dau tiên là 80H
+ 208   1        {
+ 209   2          x = 0x80;
+ 210   2        }
+ 211   1          
+ 212   1        else if(x == 1) //Ðia chi cua dòng thu hai là 90H
+ 213   1        {
+ 214   2          x = 0x90;
+ 215   2        }
+ 216   1        
+ 217   1        else if(x == 2) //Ðia chi cua dòng thu ba là 88H
+ 218   1        {
+ 219   2        x = 0x88;
+ 220   2        }
+ 221   1        
+ 222   1        else if(x==3)
+ 223   1        {
+ 224   2          x = 0x98;
+ 225   2        }
+ 226   1        
+ 227   1        pos = x + y;
+ 228   1        LCD12864_WriteCmd(pos);
+ 229   1      }
+ 230          
+ 231          /*************************************************** ***** ****************************
+ 232          * Tên chuc nang: LCD12864_ClearScreen
+ 233          * Chuc nang: o che do ve, lenh 01H cua LCD12864 không xóa duoc màn hình nên ban phai tu viet hàm rõ ràng h
+             -on.
+ 234          * Chuc nang màn hình
+ 235          * Ðau vào: Không có
+ 236          * Ðau ra: Không có
+ 237          **************************************************** * *******************************/
+ 238          #ifdef LCD12864_PICTURE
+ 239          
+C51 COMPILER V9.60.0.0   LCD12864                                                          12/07/2023 10:33:06 PAGE 5   
+
+ 240          void LCD12864_DrowPic(uchar *a)
+ 241          {
+ 242   1      
+ 243   1        unsigned char i,j;
+ 244   1        //LCD12864_ClearScreen();
+ 245   1        LCD12864_WriteCmd(0x34); //Bat tap lenh mo rong và tat hien thi ban ve.
+ 246   1        
+ 247   1        for(i=0;i<32;i++) //Vì LCD có 32 toa do doc nên viet ba muoi hai lan
+ 248   1        {
+ 249   2          LCD12864_WriteCmd(0x80+i); //Ðau tiên ghi giá tri toa do doc Y
+ 250   2          LCD12864_WriteCmd(0x80); //Viet giá tri cua bieu do X
+ 251   2          for(j=0; j<16; j++) //Có 16 biT trong abscissa và hai byte du lieu cung duoc ghi trong moi biT
+ 252   2          { //Chi can viet 32 lan, khi viet 2 byte thì bieu do se tu dong
+ 253   3            LCD12864_WriteData(*a); //thêm 1 nên không can ghi lai dia chi.
+ 254   3            a++;
+ 255   3          }
+ 256   2        }
+ 257   1        
+ 258   1        for(i=0;i<32;i++) //Vì LCD có 32 toa do doc nên viet ba muoi hai lan
+ 259   1        {
+ 260   2          LCD12864_WriteCmd(0x80+i); //Ðau tiên ghi giá tri toa do doc Y
+ 261   2          LCD12864_WriteCmd(0x88); //Viet giá tri cua bieu do X
+ 262   2          for(j=0; j<16; j++) //Có 16 biT trong abscissa và hai byte du lieu cung duoc ghi trong moi biT
+ 263   2          { //Chi can viet 32 lan, nghi rang sau khi viet 2 byte thì bieu do se tu dong
+ 264   3            LCD12864_WriteData(*a); //Tu dong thêm 1 nên không can ghi lai dia chi.
+ 265   3            a++;
+ 266   3          }
+ 267   2        }
+ 268   1        
+ 269   1        LCD12864_WriteCmd(0x36); //Mo màn hình
+ 270   1        LCD12864_WriteCmd(0x30); //Quay lai tap lenh co bon
+ 271   1      }
+ 272          
+ 273          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    496    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,3 @@
+".\Objects\module.obj" 
+TO ".\Objects\Modelue_7seg" 
+PRINT(".\Listings\Modelue_7seg.m51") RAMSIZE(256) 

@@ -1,0 +1,130 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              11/08/2023 08:18:16 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include "lcd.h"
+   3          
+   4          #define GPIO_KEY P1
+   5          
+   6          unsigned char KeyValue;
+   7          // Bien luu tru gia tri phim doc duoc
+   8          unsigned char KeyState;
+   9          // Bien luu trang thai nut nhan
+  10          unsigned char PuZh[] = " Liem__21139076 ";
+  11          void Delay10ms(); // Ham tao do tre 10ms
+  12          void KeyDown();   // Ham kiem tra nut nhan
+  13          
+  14          /*******************************************************************************
+  15          Chuong trinh: Ham main
+  16          *******************************************************************************/
+  17          void main(void)
+  18          {
+  19   1          unsigned char i;
+  20   1          LcdInit();
+  21   1          KeyState = 0;
+  22   1        // Ghi lan luot chuoi ra man hinh LCD
+  23   1          for (i = 0; i < 16; i++)
+  24   1          {
+  25   2              LcdWriteData(PuZh[i]);
+  26   2          }
+  27   1          while (1)
+  28   1          {
+  29   2              KeyDown();  
+  30   2              if (KeyState)
+  31   2              {
+  32   3                  KeyState = 0;
+  33   3                // Dua con tro den dau hang thu hai de hien thi KeyValue len LCD
+  34   3                  LcdWriteCom(0x80 + 0x40);
+  35   3                  LcdWriteData('0' + KeyValue);
+  36   3              }
+  37   2          }
+  38   1      }
+  39          
+  40          /*******************************************************************************
+  41          * Ten ham          : KeyDown
+  42          * Chuc nang         : Kiem tra va doc gia tri nut nhan
+  43          *******************************************************************************/
+  44          void KeyDown(void)
+  45          {
+  46   1          char a;
+  47   1          GPIO_KEY = 0x0f;
+  48   1          if (GPIO_KEY != 0x0f)
+  49   1          {
+  50   2              Delay10ms();
+  51   2              if (GPIO_KEY != 0x0f)
+  52   2              {
+  53   3                  KeyState = 1;
+  54   3                  // Kiem tra hang
+  55   3                  GPIO_KEY = 0X0F;
+C51 COMPILER V9.60.0.0   MAIN                                                              11/08/2023 08:18:16 PAGE 2   
+
+  56   3                  switch (GPIO_KEY)
+  57   3                  {
+  58   4                  case (0X07):
+  59   4                      KeyValue = 0;
+  60   4                      break;
+  61   4                  case (0X0b):
+  62   4                      KeyValue = 1;
+  63   4                      break;
+  64   4                  case (0X0d):
+  65   4                      KeyValue = 2;
+  66   4                      break;
+  67   4                  case (0X0e):
+  68   4                      KeyValue = 3;
+  69   4                      break;
+  70   4                  }
+  71   3                  // Kiem tra cot
+  72   3                  GPIO_KEY = 0XF0;
+  73   3                  Delay10ms();
+  74   3                  switch (GPIO_KEY)
+  75   3                  {
+  76   4                  case (0X70):
+  77   4                      KeyValue = KeyValue;
+  78   4                      break;
+  79   4                  case (0Xb0):
+  80   4                      KeyValue = KeyValue + 4;
+  81   4                      break;
+  82   4                  case (0Xd0):
+  83   4                      KeyValue = KeyValue + 8;
+  84   4                      break;
+  85   4                  case (0Xe0):
+  86   4                      KeyValue = KeyValue + 12;
+  87   4                      break;
+  88   4                  }
+  89   3                  while ((a < 50) && (GPIO_KEY != 0xf0))
+  90   3                  {
+  91   4                      Delay10ms();
+  92   4                      a++;
+  93   4                  }
+  94   3                  a = 0;
+  95   3              }
+  96   2          }
+  97   1      }
+  98          
+  99          void Delay10ms(void) // Ham tao do tre 10ms
+ 100          {
+ 101   1          unsigned char a, b, c;
+ 102   1          for (c = 1; c > 0; c--)
+ 103   1              for (b = 38; b > 0; b--)
+ 104   1                  for (a = 130; a > 0; a--);
+ 105   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    244    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     19       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

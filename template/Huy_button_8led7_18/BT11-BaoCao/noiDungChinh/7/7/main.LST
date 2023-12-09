@@ -1,0 +1,201 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              11/16/2023 10:59:14 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          
+   2          #include<REGX52.H>
+   3          
+   4          typedef unsigned int u16; 
+   5          typedef unsigned char u8;
+   6          
+   7          //PORT 0 = LED 
+   8          #define SMG_A_DP_PORT P0  
+   9          
+  10          // 3 chân input cho IC 74138
+  11          sbit LSA=P2^2;
+  12          sbit LSB=P2^3;
+  13          sbit LSC=P2^4;
+  14          
+  15          // 4 chân nút nh?n, trong dó co 2 chân có the dung lam interrupt 
+  16          sbit K1 = P3^1;
+  17          sbit K2 = P3^0;
+  18          sbit K3 = P3^2;
+  19          sbit K4 = P3^3;
+  20          
+  21          unsigned int count  = 0;
+  22          // Mã led 7 doan tu 1 den 16
+  23          
+  24          u8 gsmg_code[17]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+  25                  0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};
+  26          
+  27          
+  28          /*
+  29          void delay_10us(u16 ten_us)
+  30          {
+  31            while(ten_us--);  
+  32          }
+  33                  
+  34                  */
+  35          // khai báo ng?t timer 
+  36          void btn_setup(){
+  37   1        IT0 =1;
+  38   1        IT1 = 1;
+  39   1        EA =1;
+  40   1        EX0 = 1;
+  41   1        EX1 = 1;
+  42   1      }
+  43          void ISR_INT0(void) interrupt 0
+  44          {
+  45   1            count =1;
+  46   1      }
+  47          void ISR_timer0(void) interrupt 1
+  48          {
+  49   1        TH0 = 0xFC;
+  50   1        TL0 = 0x18;
+  51   1        count++;
+  52   1      }
+  53          void delayMS(unsigned int t){
+  54   1        
+  55   1          TMOD = 0x01;
+C51 COMPILER V9.60.0.0   MAIN                                                              11/16/2023 10:59:14 PAGE 2   
+
+  56   1          TH0 = 0xFC;
+  57   1          TL0 = 0x18;
+  58   1          IE = 0x82;
+  59   1          count =0;
+  60   1          TR0 =1;
+  61   1          while(count < t);
+  62   1          IE =0;
+  63   1          TR0 =0;
+  64   1          
+  65   1        
+  66   1      }
+  67          /*******************************************************************************
+  68          
+  69          void smg_display(void)
+  70          {
+  71            u8 i=0;
+  72          
+  73            for(i=0;i<8;i++)
+  74            {
+  75                switch(i)//Î»Ñ¡
+  76              {
+  77                case 0: LSC=1;LSB=1;LSA=1;break;
+  78                case 1: LSC=1;LSB=1;LSA=0;break;
+  79                case 2: LSC=1;LSB=0;LSA=1;break;
+  80                case 3: LSC=1;LSB=0;LSA=0;break;
+  81                case 4: LSC=0;LSB=1;LSA=1;break;
+  82                case 5: LSC=0;LSB=1;LSA=0;break;
+  83                case 6: LSC=0;LSB=0;LSA=1;break;
+  84                case 7: LSC=0;LSB=0;LSA=0;break;
+  85              }
+  86              SMG_A_DP_PORT=gsmg_code[i];//´«ËÍ¶ÎÑ¡Êý¾Ý
+  87          //    delay_10us(10000000);//ÑÓÊ±Ò»¶ÎÊ±¼ä£¬µÈ´ýÏÔÊ¾ÎÈ¶¨
+  88              delayMS(1000);
+  89              SMG_A_DP_PORT=0x00;//ÏûÒô
+  90            }
+  91          }
+  92          
+  93          /*******************************************************************************
+  94          * º¯ Êý Ãû       : main
+  95          * º¯Êý¹¦ÄÜ     : Ö÷º¯Êý
+  96          * Êä    Èë       : ÎÞ
+  97          * Êä    ³ö       : ÎÞ
+  98          *******************************************************************************/
+  99          
+ 100          // DICH LED tu LED1 ve LED 8 : 0 1 2 3 4 5 6 7 
+ 101          void smg_display1(void)
+ 102          {
+ 103   1        u8 i=0;
+ 104   1      
+ 105   1        for(i=0;i<8;i++)
+ 106   1        {
+ 107   2            switch(i)//Î»Ñ¡
+ 108   2          {
+ 109   3            case 0: LSC=1;LSB=1;LSA=1;break;
+ 110   3            case 1: LSC=1;LSB=1;LSA=0;break;
+ 111   3            case 2: LSC=1;LSB=0;LSA=1;break;
+ 112   3            case 3: LSC=1;LSB=0;LSA=0;break;
+ 113   3            case 4: LSC=0;LSB=1;LSA=1;break;
+ 114   3            case 5: LSC=0;LSB=1;LSA=0;break;
+ 115   3            case 6: LSC=0;LSB=0;LSA=1;break;
+ 116   3            case 7: LSC=0;LSB=0;LSA=0;break;
+ 117   3          }
+C51 COMPILER V9.60.0.0   MAIN                                                              11/16/2023 10:59:14 PAGE 3   
+
+ 118   2          SMG_A_DP_PORT=gsmg_code[i];//´«ËÍ¶ÎÑ¡Êý¾Ý
+ 119   2          //delay_10us(10000000);
+ 120   2          delayMS(1000);
+ 121   2          SMG_A_DP_PORT=0x00;//ÏûÒô
+ 122   2        }
+ 123   1      }
+ 124          
+ 125          // DICH LED tu LED7 ve LED 1 :7 6 5 4 3 2 1 0 
+ 126          void smg_display2(void)
+ 127          {
+ 128   1        u8 i=0;
+ 129   1      
+ 130   1        for(i=0;i<8;i++)
+ 131   1        {
+ 132   2            switch(i)//Î»Ñ¡
+ 133   2          {
+ 134   3        //    case 7: LSC=1;LSB=1;LSA=1;break;
+ 135   3            case 6: LSC=1;LSB=1;LSA=0;break;
+ 136   3            case 5: LSC=1;LSB=0;LSA=1;break;
+ 137   3            case 4: LSC=1;LSB=0;LSA=0;break;
+ 138   3            case 3: LSC=0;LSB=1;LSA=1;break;
+ 139   3            case 2: LSC=0;LSB=1;LSA=0;break;
+ 140   3            case 1: LSC=0;LSB=0;LSA=1;break;
+ 141   3            case 0: LSC=0;LSB=0;LSA=0;break;
+ 142   3          }
+ 143   2          SMG_A_DP_PORT=gsmg_code[i];//´«ËÍ¶ÎÑ¡Êý¾Ý
+ 144   2          //delay_10us(10000000);
+ 145   2          delayMS(1000);
+ 146   2          SMG_A_DP_PORT=0x00;//ÏûÒô
+ 147   2        }
+ 148   1      }
+ 149          
+ 150          
+ 151          
+ 152          
+ 153          void main()
+ 154          { 
+ 155   1        btn_setup();
+ 156   1        while(1)
+ 157   1        {
+ 158   2          if(K1 == 0){
+ 159   3            smg_display();
+*** WARNING C206 IN LINE 159 OF main.c: 'smg_display': missing function-prototype
+ 160   3            
+ 161   3          }
+ 162   2        if (K2 == 0){
+ 163   3            smg_display1();
+ 164   3            
+ 165   3          }
+ 166   2          
+ 167   2          else if (count == 1){
+ 168   3            smg_display2();
+ 169   3          }
+ 170   2        }   
+ 171   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    315    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   MAIN                                                              11/16/2023 10:59:14 PAGE 4   
+
+   DATA SIZE        =     19    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,156 @@
+C51 COMPILER V9.60.0.0   LCD                                                               11/10/2023 10:44:18 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN lcd.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE lcd.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include"lcd.h"
+   2          
+   3          /*******************************************************************************
+   4          * ºChuong trinh       : Lcd1602_Delay1ms
+   5          *******************************************************************************/
+   6          
+   7          void Lcd1602_Delay1ms(uint c)   //Delay1ms
+   8          {
+   9   1          uchar a,b;
+  10   1        for (; c>0; c--)
+  11   1        {
+  12   2           for (b=199;b>0;b--)
+  13   2           {
+  14   3              for(a=1;a>0;a--);
+  15   3           }      
+  16   2        }
+  17   1            
+  18   1      }
+  19          
+  20          /*******************************************************************************
+  21          * Chuong trình        : LcdWriteCom
+  22          * Chuc nang           : Ghi command den LCD
+  23          *******************************************************************************/
+  24          #ifndef   LCD1602_4PINS  //Chan LCD1602_4PINS khong duoc su dung
+              void LcdWriteCom(uchar com)   //8 bit
+              {
+                LCD1602_E = 0;     //Bat Dau Doc Du Lieu
+                LCD1602_RS = 0;    //Chon Thanh Ghi Tap Lenh
+                LCD1602_RW = 0;    //Che do ghi du lieu
+                
+                LCD1602_DATAPINS = com;     //·Gan lenh can gui cho chan I/O
+                Lcd1602_Delay1ms(1);
+              
+                //Thay doi muc logic tu H->L de ghi lenh vao LCD
+                LCD1602_E = 1;            
+                Lcd1602_Delay1ms(5);    
+                LCD1602_E = 0;
+              }
+              #else 
+  40          void LcdWriteCom(uchar com)   //4-bit
+  41          {
+  42   1        LCD1602_E = 0;   
+  43   1        LCD1602_RS = 0; 
+  44   1        LCD1602_RW = 0; 
+  45   1      
+  46   1        //Gui truoc 4bit cao cua command
+  47   1        LCD1602_DATAPINS = com; 
+  48   1        Lcd1602_Delay1ms(1);
+  49   1      
+  50   1        LCD1602_E = 1;
+  51   1        Lcd1602_Delay1ms(5);
+  52   1        LCD1602_E = 0;
+  53   1      
+  54   1      //  Dich trai 4 bit de gui 4 bit thap cua command
+  55   1        LCD1602_DATAPINS = com << 4;
+C51 COMPILER V9.60.0.0   LCD                                                               11/10/2023 10:44:18 PAGE 2   
+
+  56   1        Lcd1602_Delay1ms(1);
+  57   1      
+  58   1        LCD1602_E = 1;
+  59   1        Lcd1602_Delay1ms(5);
+  60   1        LCD1602_E = 0;
+  61   1      }
+  62          #endif
+  63          /*******************************************************************************
+  64          * Chuong trinh         : LcdWriteData
+  65          * Chuc nang   : Gui data den LCD
+  66          *******************************************************************************/       
+  67          #ifndef   LCD1602_4PINS      
+              void LcdWriteData(uchar dat)      //8bit
+              {
+                LCD1602_E = 0;
+                LCD1602_RS = 1; 
+                LCD1602_RW = 0; 
+              
+                LCD1602_DATAPINS = dat; //Ghi du lieu can gui vao port noi voi LCD
+                Lcd1602_Delay1ms(1);
+              
+                LCD1602_E = 1;
+                Lcd1602_Delay1ms(5);
+                LCD1602_E = 0;
+              }
+              #else
+  82          void LcdWriteData(uchar dat)      //4bit
+  83          {
+  84   1        
+  85   1        LCD1602_E = 0;
+  86   1        LCD1602_RS = 1;   
+  87   1        LCD1602_RW = 0;   
+  88   1      // Gui truoc 4 bit cao cua data
+  89   1        LCD1602_DATAPINS = dat;
+  90   1        Lcd1602_Delay1ms(1);
+  91   1      
+  92   1        LCD1602_E = 1;    
+  93   1        Lcd1602_Delay1ms(5);
+  94   1        LCD1602_E = 0;
+  95   1      
+  96   1      // Dich trai 4 bit de gui tiep 4 bit thap cua data
+  97   1        LCD1602_DATAPINS = dat << 4; 
+  98   1        Lcd1602_Delay1ms(1);
+  99   1      
+ 100   1        LCD1602_E = 1;
+ 101   1        Lcd1602_Delay1ms(5);
+ 102   1        LCD1602_E = 0;
+ 103   1      }
+ 104          #endif
+ 105          /*******************************************************************************
+ 106          * Chuong trinh     : LcdInit()
+ 107          * Chuc nang : Khoi tao cac thong so ban dau cua LCD
+ 108          *******************************************************************************/       
+ 109          #ifndef   LCD1602_4PINS
+              void LcdInit()              //8 bit data
+              {
+                lcd1602_write_cmd(0x38);// 8-bit data, 2 lines, 5x7 font size
+                lcd1602_write_cmd(0x0c);//Display on, cursor off, blink off
+                lcd1602_write_cmd(0x06);//Entry mode set: increment, no shift
+                lcd1602_write_cmd(0x01);//Clear LCD
+                LcdWriteCom(0x80);  //Dua con tro ve lai o dau cua hang dau
+              }
+C51 COMPILER V9.60.0.0   LCD                                                               11/10/2023 10:44:18 PAGE 3   
+
+              #else
+ 119          void LcdInit()              //4 bit data
+ 120          {
+ 121   1        LcdWriteCom(0x32);  // Chuyen che do 8-bit sang 4-bit
+ 122   1        LcdWriteCom(0x28);  // 2 dòng, ma tran 5x7
+ 123   1        LcdWriteCom(0x0c);  
+ 124   1        LcdWriteCom(0x06);  
+ 125   1        LcdWriteCom(0x01);  
+ 126   1        LcdWriteCom(0x80); 
+ 127   1      
+ 128   1      }
+ 129          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    142    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

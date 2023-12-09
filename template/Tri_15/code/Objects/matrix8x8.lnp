@@ -1,0 +1,3 @@
+".\Objects\matrix.obj" 
+TO ".\Objects\matrix8x8" 
+PRINT(".\Listings\matrix8x8.m51") RAMSIZE(256) 

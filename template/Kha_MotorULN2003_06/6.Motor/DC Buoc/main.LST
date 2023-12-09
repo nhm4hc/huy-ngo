@@ -1,0 +1,168 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              11/10/2023 10:14:17 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Applications\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          Tên san pham: Bo dieu khien he thong
+   3          Su dung IO: Su dung P1 cho he thong chính, su dung P3.0, P3.1, P3.2, P3.3 cho các chuc nang phu.
+   4          Ket qua dieu khien: K1 du?i, th?i gian thay d?i, K2 du?i, th?i gian thay d?i, K3 du?i, th?p, K4 du?i, cao.
+   5          Chú ý: Do s? d?ng P3.2 d? k?t n?i bên ngoài, do dó các dèn LED bên ngoài s? không sáng khi h? th?ng chuy?n
+             - sang ch? d? ngoài vi?c di?u khi?n b?i P3.2.
+   6          K?t qu? di?u khi?n t?t nh?t s? du?c hi?n th? du?i dây sau khi ra kh?i ch? d? bên ngoài
+   7          *******************************************************************************/ 
+   8          #include "reg52.h"
+   9          
+  10          //µç»úIO
+  11          #define GPIO_MOTOR P1
+  12          //sbit F1 = P1^0;
+  13          //sbit F2 = P1^1;
+  14          //sbit F3 = P1^2;
+  15          //sbit F4 = P1^3;
+  16          //°´¼üIO
+  17          sbit K1=P3^0;
+  18          sbit K2=P3^1;
+  19          sbit K3=P3^2;
+  20          sbit K4=P3^3;
+  21          
+  22          unsigned char code FFW[8]={0xf1,0xf3,0xf2,0xf6,0xf4,0xfc,0xf8,0xf9}; //·Xoay cung chieu kim dong ho theo h
+             -alf-step
+  23          unsigned char code FFZ[8]={0xf9,0xf8,0xfc,0xf4,0xf6,0xf2,0xf3,0xf1}; //Xoay nguoc chieu kim dong ho theo h
+             -alf-step
+  24          
+  25          unsigned char Direction,Speed;
+  26          void Delay(unsigned int t);
+  27          void  Motor(); 
+  28          
+  29          /*******************************************************************************
+  30          Tên hàm chính: main
+  31          Chuc nang cua hàm: Hàm chính
+  32          Tham so dau vào: Không có
+  33          Giá tri tra ve: Không có
+  34          *******************************************************************************/
+  35          
+  36          void main(void) 
+  37          { 
+  38   1        unsigned char i;
+  39   1        Speed=30;
+  40   1        while(1)
+  41   1        {
+  42   2          if(K1==0)   //Kiem tra nut K1 co nhan hay khong
+  43   2          {
+  44   3            Delay(1); //Ham delay don nut
+  45   3            if(K1==0)
+  46   3            {
+  47   4              Direction=1;
+  48   4            }
+  49   3            while((i<200)&&(K1==0))  //Kiem tra nut co duoc nha hay khong (trong 200ms)
+  50   3            {
+  51   4              Delay(1);
+  52   4              i++;
+C51 COMPILER V9.60.0.0   MAIN                                                              11/10/2023 10:14:17 PAGE 2   
+
+  53   4            }
+  54   3            i=0;
+  55   3          }
+  56   2          if(K2==0)   //¼ì²â°´¼üK1ÊÇ·ñ°´ÏÂ
+  57   2          {
+  58   3            Delay(1); //Ïû³ý¶¶¶¯
+  59   3            if(K2==0)
+  60   3            {
+  61   4              Direction=2;
+  62   4            }
+  63   3            while((i<200)&&(K2==0))  //¼ì²â°´¼üÊÇ·ñËÉ¿ª
+  64   3            {
+  65   4              Delay(1);
+  66   4              i++;
+  67   4            }
+  68   3            i=0;
+  69   3          }     
+  70   2          if(K3==0)   //¼ì²â°´¼üK1ÊÇ·ñ°´ÏÂ
+  71   2          {
+  72   3            Delay(1); //Ïû³ý¶¶¶¯
+  73   3            if(K3==0)
+  74   3            {
+  75   4              Speed=13;
+  76   4            }
+  77   3            while((i<200)&&(K3==0))  //¼ì²â°´¼üÊÇ·ñËÉ¿ª
+  78   3            {
+  79   4              Delay(1);
+  80   4              i++;
+  81   4            }
+  82   3            i=0;
+  83   3          }
+  84   2          if(K4==0)   //¼ì²â°´¼üK1ÊÇ·ñ°´ÏÂ
+  85   2          {
+  86   3            Delay(1); //Ïû³ý¶¶¶¯
+  87   3            if(K4==0)
+  88   3            {
+  89   4              Speed=40;
+  90   4            }
+  91   3            while((i<200)&&(K4==0))  //¼ì²â°´¼üÊÇ·ñËÉ¿ª
+  92   3            {
+  93   4              Delay(1);
+  94   4              i++;
+  95   4            }
+  96   3            i=0;
+  97   3          }   
+  98   2          Motor();
+  99   2        }
+ 100   1      }
+ 101          /*******************************************************************************
+ 102          Tên chuc nang: Dong co
+ 103          Chuc nang chính: Quay dong co
+ 104          Ðau vào: Không
+ 105          Ðau ra: Không
+ 106          *******************************************************************************/
+ 107          
+ 108          void  Motor()
+ 109          { 
+ 110   1        unsigned char i;
+ 111   1        for(i=0;i<8;i++)
+ 112   1        {
+ 113   2          if(Direction==1) 
+ 114   2            GPIO_MOTOR = FFW[i]&0x1f;  //È¡Êý¾Ý
+C51 COMPILER V9.60.0.0   MAIN                                                              11/10/2023 10:14:17 PAGE 3   
+
+ 115   2          if(Direction==2) 
+ 116   2            GPIO_MOTOR = FFZ[i]&0x1f;
+ 117   2          Delay(Speed); //µ÷½Ú×ªËÙ  
+ 118   2        }                   
+ 119   1      }
+ 120          /*******************************************************************************
+ 121          Tên hàm: Delay
+ 122          Chuc nang hàm: Ðoi mot khoang thoi gian
+ 123          Tham so vào: t
+ 124          Tham so ra: Không
+ 125          
+ 126          *******************************************************************************/
+ 127          void Delay(unsigned int t)
+ 128          {                           
+ 129   1        unsigned int k;
+ 130   1        while(t--)
+ 131   1        {
+ 132   2          for(k=0; k<80; k++)
+ 133   2          { }
+ 134   2        }
+ 135   1      }
+ 136          
+ 137          
+ 138          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    248    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,148 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/17/2023  07:33:49  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\led_matrix.obj TO .\Objects\led_matrix PRINT (.\Listings\led_matrix.m51) RAMSIZE (
+>> 256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\led_matrix.obj (LED_MATRIX)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\led_matrix (LED_MATRIX)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0003H     UNIT         _DATA_GROUP_
+            IDATA   000BH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0098H     UNIT         ?CO?LED_MATRIX
+            CODE    0898H     0063H     UNIT         ?PR?MAIN?LED_MATRIX
+            CODE    08FBH     002FH     UNIT         ?PR?_HC595SENDBYTE?LED_MATRIX
+            CODE    092AH     0020H     UNIT         ?PR?_DELAY?LED_MATRIX
+            CODE    094AH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\led_matrix (LED_MATRIX)
+
+
+SEGMENT                                 DATA_GROUP 
+  +--> CALLED SEGMENT                 START    LENGTH
+-----------------------------------------------------
+?C_C51STARTUP                         -----    -----
+  +--> ?PR?MAIN?LED_MATRIX
+
+?PR?MAIN?LED_MATRIX                   0008H    0003H
+  +--> ?PR?_HC595SENDBYTE?LED_MATRIX
+  +--> ?CO?LED_MATRIX
+  +--> ?PR?_DELAY?LED_MATRIX
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\led_matrix (LED_MATRIX)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        LED_MATRIX
+  C:0000H         SYMBOL        _ICE_DUMMY_
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/17/2023  07:33:49  PAGE 2
+
+
+  D:0080H         PUBLIC        P0
+  B:00B0H.6       PUBLIC        SRCLK
+  D:00B0H         PUBLIC        P3
+  C:092AH         PUBLIC        _delay
+  C:0898H         PUBLIC        main
+  B:00B0H.5       PUBLIC        RCLK
+  C:0808H         PUBLIC        CHARCODE
+  C:0800H         PUBLIC        TAB
+  B:00B0H.4       PUBLIC        SER
+  C:08FBH         PUBLIC        _Hc595SendByte
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:092AH         LINE#         52
+  C:092AH         LINE#         53
+  C:092AH         LINE#         55
+  C:0934H         LINE#         56
+  C:0949H         LINE#         57
+  -------         ENDPROC       _DELAY
+  -------         PROC          _HC595SENDBYTE
+  D:0007H         SYMBOL        dat
+  -------         DO            
+  D:0006H         SYMBOL        a
+  -------         ENDDO         
+  C:08FBH         LINE#         58
+  C:08FBH         LINE#         59
+  C:08FBH         LINE#         61
+  C:08FDH         LINE#         62
+  C:08FFH         LINE#         63
+  C:090BH         LINE#         64
+  C:090BH         LINE#         65
+  C:0916H         LINE#         66
+  C:091AH         LINE#         68
+  C:091CH         LINE#         69
+  C:091DH         LINE#         70
+  C:091EH         LINE#         71
+  C:0920H         LINE#         72
+  C:0923H         LINE#         74
+  C:0925H         LINE#         75
+  C:0926H         LINE#         76
+  C:0927H         LINE#         77
+  C:0929H         LINE#         78
+  -------         ENDPROC       _HC595SENDBYTE
+  -------         PROC          MAIN
+  -------         DO            
+  D:0001H         SYMBOL        tab
+  D:0008H         SYMBOL        j
+  D:0009H         SYMBOL        i
+  -------         ENDDO         
+  C:0898H         LINE#         80
+  C:0898H         LINE#         81
+  C:0898H         LINE#         85
+  C:0898H         LINE#         86
+  C:0898H         LINE#         87
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/17/2023  07:33:49  PAGE 3
+
+
+  C:089DH         LINE#         88
+  C:089DH         LINE#         89
+  C:08A9H         LINE#         90
+  C:08A9H         LINE#         92
+  C:08AEH         LINE#         93
+  C:08B5H         LINE#         94
+  C:08D4H         LINE#         95
+  C:08DBH         LINE#         96
+  C:08DEH         LINE#         98
+  C:08EFH         LINE#         99
+  C:08F1H         LINE#         100
+  C:08F7H         LINE#         101
+  C:08F7H         LINE#         102
+  C:08F9H         LINE#         103
+  C:08F9H         LINE#         104
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        LED_MATRIX
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 014AH BYTE (16%) *
+******************************************************************************
+
+Program Size: data=12.0 xdata=0 code=345
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

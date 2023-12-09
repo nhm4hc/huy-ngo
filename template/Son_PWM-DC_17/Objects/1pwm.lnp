@@ -1,0 +1,3 @@
+".\Objects\affa.obj" 
+TO ".\Objects\1pwm" 
+PRINT(".\Listings\1pwm.m51")

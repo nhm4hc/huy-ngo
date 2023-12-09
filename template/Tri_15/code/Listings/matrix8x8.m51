@@ -1,0 +1,142 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    11/10/2023  10:18:33  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\matrix.obj TO .\Objects\matrix8x8 PRINT (.\Listings\matrix8x8.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\matrix.obj (MATRIX)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\matrix8x8 (MATRIX)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0003H     UNIT         _DATA_GROUP_
+            IDATA   000BH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0098H     UNIT         ?CO?MATRIX
+            CODE    009BH     005AH     UNIT         ?PR?MAIN?MATRIX
+            CODE    00F5H     0026H     UNIT         ?PR?_HC595SENDBYTE?MATRIX
+            CODE    011BH     0020H     UNIT         ?PR?_DELAY?MATRIX
+            CODE    013BH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\matrix8x8 (MATRIX)
+
+
+SEGMENT                             DATA_GROUP 
+  +--> CALLED SEGMENT             START    LENGTH
+-------------------------------------------------
+?C_C51STARTUP                     -----    -----
+  +--> ?PR?MAIN?MATRIX
+
+?PR?MAIN?MATRIX                   0008H    0003H
+  +--> ?PR?_HC595SENDBYTE?MATRIX
+  +--> ?CO?MATRIX
+  +--> ?PR?_DELAY?MATRIX
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\matrix8x8 (MATRIX)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MATRIX
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  B:00B0H.6       PUBLIC        SRCLK
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  11/10/2023  10:18:33  PAGE 2
+
+
+  D:00B0H         PUBLIC        P3
+  C:011BH         PUBLIC        _delay
+  C:009BH         PUBLIC        main
+  B:00B0H.5       PUBLIC        RCLK
+  C:000BH         PUBLIC        CHARCODE
+  C:0003H         PUBLIC        TAB
+  B:00B0H.4       PUBLIC        SER
+  C:00F5H         PUBLIC        _Hc595SendByte
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:011BH         LINE#         53
+  C:011BH         LINE#         54
+  C:011BH         LINE#         56
+  C:0125H         LINE#         57
+  C:013AH         LINE#         58
+  -------         ENDPROC       _DELAY
+  -------         PROC          _HC595SENDBYTE
+  D:0007H         SYMBOL        dat
+  -------         DO            
+  D:0006H         SYMBOL        a
+  -------         ENDDO         
+  C:00F5H         LINE#         60
+  C:00F5H         LINE#         61
+  C:00F5H         LINE#         63
+  C:00F7H         LINE#         64
+  C:00F9H         LINE#         65
+  C:00FBH         LINE#         66
+  C:00FBH         LINE#         67
+  C:0106H         LINE#         68
+  C:010AH         LINE#         70
+  C:010CH         LINE#         71
+  C:010DH         LINE#         72
+  C:010EH         LINE#         73
+  C:0110H         LINE#         74
+  C:0114H         LINE#         76
+  C:0116H         LINE#         77
+  C:0117H         LINE#         78
+  C:0118H         LINE#         79
+  C:011AH         LINE#         80
+  -------         ENDPROC       _HC595SENDBYTE
+  -------         PROC          MAIN
+  -------         DO            
+  D:0001H         SYMBOL        tab
+  D:0008H         SYMBOL        j
+  D:0009H         SYMBOL        i
+  -------         ENDDO         
+  C:009BH         LINE#         83
+  C:009BH         LINE#         84
+  C:009BH         LINE#         88
+  C:009BH         LINE#         89
+  C:009BH         LINE#         90
+  C:00A0H         LINE#         91
+  C:00A0H         LINE#         92
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  11/10/2023  10:18:33  PAGE 3
+
+
+  C:00A2H         LINE#         93
+  C:00A2H         LINE#         94
+  C:00A7H         LINE#         95
+  C:00AEH         LINE#         96
+  C:00CDH         LINE#         97
+  C:00D4H         LINE#         98
+  C:00D8H         LINE#         99
+  C:00E9H         LINE#         100
+  C:00EBH         LINE#         101
+  C:00F0H         LINE#         102
+  C:00F0H         LINE#         103
+  C:00F3H         LINE#         104
+  C:00F3H         LINE#         105
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MATRIX
+
+Program Size: data=12.0 xdata=0 code=327
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
