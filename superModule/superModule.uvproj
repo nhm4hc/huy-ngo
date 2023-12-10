@@ -406,6 +406,16 @@
               <FileType>5</FileType>
               <FilePath>.\LCD1602.h</FilePath>
             </File>
+            <File>
+              <FileName>module_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\module_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\module_8.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

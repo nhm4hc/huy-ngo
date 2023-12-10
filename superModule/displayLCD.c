@@ -1,7 +1,8 @@
 #include "displayLCD.h"
 #include "LCD1602.h"
+#include "module_8.h"
 
-void IrInit(){
+void IrInit(void){
 	checkRun = 0;
 	module = 0;
 	IT0 = 1;
@@ -18,7 +19,7 @@ void DelayMs(unsigned int x){
 	}
 }
 
-void ReadIr() interrupt 0 {
+void ReadIr(void) interrupt 0 {
 	unsigned char j,k;
 	unsigned int err;
 	Time=0;					 
@@ -143,7 +144,7 @@ void runModule(int x){
 				// Tr?ng
 				break;
 		case 8:
-				// Tr?ng
+				module_8();
 				break;
 		case 9:
 			// Tr?ng
@@ -261,11 +262,6 @@ void signalRecieved(void){
 		if(module < 20)
 		{
 			runModule(module);
-			LcdWriteCom(0x80+0x40);
-			for(i=0;i<9;i++)
-			{
-				LcdWriteData(CDIS3[i]);	
-			}
 		}
 		else
 		{

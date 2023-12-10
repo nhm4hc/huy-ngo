@@ -1,6 +1,7 @@
 ".\Objects\STARTUP.obj",
 ".\Objects\main.obj",
 ".\Objects\displayLCD.obj",
-".\Objects\LCD1602.obj" 
+".\Objects\LCD1602.obj",
+".\Objects\module_8.obj" 
 TO ".\Objects\superModule" 
 PRINT(".\Listings\superModule.m51") RAMSIZE(256) 

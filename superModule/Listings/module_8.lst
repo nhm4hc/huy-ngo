@@ -1,0 +1,64 @@
+C51 COMPILER V9.60.0.0   MODULE_8                                                          12/10/2023 13:06:45 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_8
+OBJECT MODULE PLACED IN .\Objects\module_8.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE module_8.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -module_8.lst) TABS(2) OBJECT(.\Objects\module_8.obj)
+
+line level    source
+
+   1          #include "module_8.h"
+   2          
+   3          void module8_delayMS(unsigned int t){
+   4   1        int i,j;
+   5   1        for (i=0; i<t; i++)
+   6   1          for (j=0; j<123; j++) {} 
+   7   1      }
+   8          
+   9          void chonKey(unsigned int k){
+  10   1        switch (k)
+  11   1        {
+  12   2          case (0):
+  13   2              module8_LSC = 0; module8_LSB = 0; module8_LSA = 0; break;
+  14   2          case (1):
+  15   2              module8_LSC = 0; module8_LSB = 0; module8_LSA = 1; break;
+  16   2          case (2):
+  17   2              module8_LSC = 0; module8_LSB = 1; module8_LSA = 0; break;
+  18   2          case (3):
+  19   2              module8_LSC = 0; module8_LSB = 1; module8_LSA = 1; break;        
+  20   2          case (4):
+  21   2              module8_LSC = 1; module8_LSB = 0; module8_LSA = 0; break;        
+  22   2          case (5):
+  23   2              module8_LSC = 1; module8_LSB = 0; module8_LSA = 1; break;       
+  24   2          case (6):
+  25   2              module8_LSC = 1; module8_LSB = 1; module8_LSA = 0; break;       
+  26   2          case (7):
+  27   2              module8_LSC = 1; module8_LSB = 1; module8_LSA = 1; break;        
+  28   2        }
+  29   1      }
+  30          
+  31          void module_8(void){
+  32   1        chonKey(0); GPIO_DIG=DIG_CODE[0]; module8_delayMS(3);
+  33   1        chonKey(1); GPIO_DIG=DIG_CODE[2]; module8_delayMS(3);
+  34   1        chonKey(2); GPIO_DIG=DIG_CODE[0]; module8_delayMS(3);
+  35   1        chonKey(3); GPIO_DIG=DIG_CODE[9]; module8_delayMS(3);
+  36   1        chonKey(4); GPIO_DIG=DIG_CODE[3]; module8_delayMS(3);
+  37   1        chonKey(5); GPIO_DIG=DIG_CODE[1]; module8_delayMS(3);
+  38   1        chonKey(6); GPIO_DIG=DIG_CODE[1]; module8_delayMS(3);
+  39   1        chonKey(7); GPIO_DIG=DIG_CODE[2]; module8_delayMS(3);
+  40   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    221    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

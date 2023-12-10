@@ -18,9 +18,9 @@ static unsigned int checkRun;
 static unsigned int module;
 static unsigned int nutBam;
 
-void IrInit();
-void DelayMs(unsigned int );
-void ReadIr();
+void IrInit(void);
+void DelayMs(unsigned int x);
+void ReadIr(void);
 void hienThiChuc(int x);
 void hienThiDonVi(int x);
 void reset(void);
