@@ -407,16 +407,6 @@
               <FilePath>.\LCD1602.h</FilePath>
             </File>
             <File>
-              <FileName>module_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\module_8.c</FilePath>
-            </File>
-            <File>
-              <FileName>module_8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\module_8.h</FilePath>
-            </File>
-            <File>
               <FileName>module_7.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\module_7.c</FilePath>
@@ -425,6 +415,16 @@
               <FileName>module_7.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\module_7.h</FilePath>
+            </File>
+            <File>
+              <FileName>module_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\module_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\module_8.h</FilePath>
             </File>
             <File>
               <FileName>module_9.c</FileName>
@@ -450,6 +450,26 @@
               <FileName>intrins.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\intrins.h</FilePath>
+            </File>
+            <File>
+              <FileName>module_12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\module_12.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\module_12.h</FilePath>
+            </File>
+            <File>
+              <FileName>module_15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\module_15.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_15.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\module_15.h</FilePath>
             </File>
           </Files>
         </Group>

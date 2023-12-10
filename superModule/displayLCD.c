@@ -4,6 +4,8 @@
 #include "module_8.h"
 #include "module_9.h"
 #include "module_11.h"
+#include "module_12.h"
+#include "module_15.h"
 
 void IrInit(void){
 	checkRun = 0;
@@ -126,25 +128,26 @@ void runModule(int x){
 	switch (x) 
 	{
     case 1:
-				// Tr?ng
+				// empty
 				break;
     case 2:
-				// Tr?ng
+				// empty
 				break;
     case 3:
-				// Tr?ng
+				// empty
 				break;
 		case 4:
-				// Tr?ng
+				// empty
 				break;
 		case 5:
-				// Tr?ng
+				// empty
 				break;
 		case 6:
-				// Tr?ng
+				// empty
 				break;
 		case 7:
 				//LCD12864_DrowPic(&ars);
+				//module 7 in here
 				break;
 		case 8:
 				module_8();
@@ -153,37 +156,23 @@ void runModule(int x){
 				module_9();
 				break;
     case 10:
-				// Tr?ng
+				// module 10 in here
+				// Using LCD16x2 for displaying, so dont call again
 				break;
     case 11:
 				module_11();
 				break;
     case 12:
-				// Tr?ng
+				module_12();
 				break;
 		case 13:
-				// Tr?ng
+				// empty
 				break;
 		case 14:
-				// Tr?ng
+				// empty
 				break;
 		case 15:
-				// Tr?ng
-				break;
-		case 16:
-				// Tr?ng
-				break;
-		case 17:
-				// Tr?ng
-				break;
-		case 18:
-				// Tr?ng
-				break;
-		case 19:
-				// Tr?ng
-				break;
-		case 20:
-				// Tr?ng
+				module_15();
 				break;
     default:
         reset();

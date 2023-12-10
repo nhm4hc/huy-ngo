@@ -1,0 +1,39 @@
+C51 COMPILER V9.60.0.0   MODULE_15                                                         12/10/2023 16:17:58 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_15
+OBJECT MODULE PLACED IN .\Objects\module_15.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE module_15.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\module_15.lst) TABS(2) OBJECT(.\Objects\module_15.obj)
+
+line level    source
+
+   1          #include "module_15.h"
+   2          
+   3          void module15_Delay10ms(unsigned int c) {
+   4   1          unsigned char a,b;
+   5   1          for(;c>0;c--)
+   6   1              for(b=38;b>0;b--)
+   7   1                  for(a=130;a>0;a--);
+   8   1      }
+   9          
+  10          void module_15(void){
+  11   1        LED_DON  = 0x00;//led tat het 
+  12   1        module15_Delay10ms(50);//delay 500ms 
+  13   1        LED_DON  = 0xff;//led sang het
+  14   1        module15_Delay10ms(50);//delay 500ms
+  15   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     66    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

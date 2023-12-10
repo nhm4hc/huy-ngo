@@ -1,0 +1,46 @@
+C51 COMPILER V9.60.0.0   MODULE_12                                                         12/10/2023 16:17:58 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_12
+OBJECT MODULE PLACED IN .\Objects\module_12.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE module_12.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\module_12.lst) TABS(2) OBJECT(.\Objects\module_12.obj)
+
+line level    source
+
+   1          #include "module_12.h"
+   2          
+   3          void module12_Delay10ms(void){
+   4   1         unsigned char a,b,c;
+   5   1         for(c=1;c>0;c--)
+   6   1            for(b=30;b>0;b--)
+   7   1               for(a=130;a>0;a--);
+   8   1      }
+   9          
+  10          void module_12(void){
+  11   1        GPIO_LED = 0xfe;  // 1111 1110 
+  12   1        if(module12_K1==0)//kiem tra nut co nhan khong
+  13   1        {
+  14   2          GPIO_LED = _cror_(GPIO_LED,1);//dich phai 1 lan
+  15   2          while((i<50)&&(module12_K1==0)) //neu an giu lau hon 500ms thi den se dich
+  16   2          {
+  17   3            module12_Delay10ms();
+  18   3            i++;//i tang moi 10ms
+  19   3          }
+  20   2          i=0;//khi tha tay sau khi an thi i = 0
+  21   2        }
+  22   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     98    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
