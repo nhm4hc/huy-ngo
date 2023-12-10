@@ -1,0 +1,6 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\displayLCD.obj",
+".\Objects\LCD1602.obj" 
+TO ".\Objects\superModule" 
+PRINT(".\Listings\superModule.m51") RAMSIZE(256) 

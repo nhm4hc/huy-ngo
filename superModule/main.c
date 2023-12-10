@@ -1,18 +1,11 @@
-// will be deleted
-int main()
-{
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	return 0;
+#include "LCD1602.h"
+#include "displayLCD.h"
+
+void main(void){
+	IrInit();
+	LcdInit();
+	displayLCD();
+	while(1){
+		signalRecieved();
+	}
 }
