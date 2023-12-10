@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              12/10/2023 16:17:58 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              12/10/2023 20:34:25 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
@@ -10,17 +10,18 @@ line level    source
 
    1          #include "LCD1602.h"
    2          #include "displayLCD.h"
-   3          //#include "module_7.h"
+   3          //#include "module_1.h"
    4          
    5          void main(void){
    6   1        IrInit();
    7   1        LcdInit();
    8   1        displayLCD();
    9   1        //LCD12864_Init();
-  10   1        while(1){
-  11   2          signalRecieved();
-  12   2        }
-  13   1      }
+  10   1        
+  11   1        while(1){
+  12   2          signalRecieved();
+  13   2        }
+  14   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

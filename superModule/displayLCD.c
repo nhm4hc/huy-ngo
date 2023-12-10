@@ -1,5 +1,6 @@
 #include "displayLCD.h"
 #include "LCD1602.h"
+#include "module_1.h"
 #include "module_7.h"
 #include "module_8.h"
 #include "module_9.h"
@@ -128,7 +129,12 @@ void runModule(int x){
 	switch (x) 
 	{
     case 1:
-				// empty
+				if(IrValue[4]==0x04 && IrValue[5]==0x06)
+				{
+					ET1 = 0;
+					//TR1 = 0;
+				}
+				module_1();
 				break;
     case 2:
 				// empty

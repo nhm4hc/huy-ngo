@@ -2,6 +2,7 @@
 ".\Objects\main.obj",
 ".\Objects\displayLCD.obj",
 ".\Objects\LCD1602.obj",
+".\Objects\module_1.obj",
 ".\Objects\module_7.obj",
 ".\Objects\module_8.obj",
 ".\Objects\module_9.obj",
