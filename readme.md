@@ -18,5 +18,6 @@ implement modules (within interrupt):
 module 13 - TanLoc_Thoigianthuc_9
 module 14 - QuangLoc_DS18B20_11
 
-
 -> integration module: super_module
+
+note: module 12 Button (trouble)
