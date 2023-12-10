@@ -129,11 +129,6 @@ void runModule(int x){
 	switch (x) 
 	{
     case 1:
-				if(IrValue[4]==0x04 && IrValue[5]==0x06)
-				{
-					ET1 = 0;
-					//TR1 = 0;
-				}
 				module_1();
 				break;
     case 2:
@@ -184,6 +179,10 @@ void runModule(int x){
         reset();
         break;
 	}
+}
+
+void disableInterrupt(void){
+	ET1 = 0;
 }
 
 void displayLCD(void){
@@ -274,12 +273,8 @@ void signalRecieved(void){
 	}
 	if(IrValue[4]==0x04 && IrValue[5]==0x06)
 	{		//stop		46H
-		LcdWriteCom(0x80+0x40);
-		for(i=0;i<9;i++)
-		{
-			LcdWriteData(CDIS2[i]);	//Hien thi 'IR-CODE:--H' len LCD
-		}
 		IrValue[2] = 0;
+		disableInterrupt();
 	}
 	
 	if(IrValue[4]==0x04 && IrValue[5]==0x05)

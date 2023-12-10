@@ -26,6 +26,7 @@ void hienThiDonVi(int x);
 void reset(void);
 void xuLi(int x);
 void runModule(int x);
+void disableInterrupt(void);
 void displayLCD(void);
 void signalRecieved(void);
 
