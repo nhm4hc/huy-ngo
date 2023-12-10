@@ -1,6 +1,8 @@
 #include "displayLCD.h"
 #include "LCD1602.h"
+#include "module_7.h"
 #include "module_8.h"
+#include "module_9.h"
 
 void IrInit(void){
 	checkRun = 0;
@@ -123,14 +125,14 @@ void runModule(int x){
 	switch (x) 
 	{
     case 1:
-			// Tr?ng
-			break;
+				// Tr?ng
+				break;
     case 2:
-      // Tr?ng
-      break;
+				// Tr?ng
+				break;
     case 3:
-			// Tr?ng
-			break;
+				// Tr?ng
+				break;
 		case 4:
 				// Tr?ng
 				break;
@@ -141,23 +143,23 @@ void runModule(int x){
 				// Tr?ng
 				break;
 		case 7:
-				// Tr?ng
+				//LCD12864_DrowPic(&ars);
 				break;
 		case 8:
 				module_8();
 				break;
 		case 9:
-			// Tr?ng
-			break;
+				module_9();
+				break;
     case 10:
-			// Tr?ng
-			break;
+				// Tr?ng
+				break;
     case 11:
-      // Tr?ng
-      break;
+				// Tr?ng
+				break;
     case 12:
-			// Tr?ng
-			break;
+				// Tr?ng
+				break;
 		case 13:
 				// Tr?ng
 				break;

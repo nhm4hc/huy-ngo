@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/07/2023  14:56:02  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/10/2023  13:37:17  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -59,7 +59,7 @@ SYMBOL TABLE OF MODULE:  pro (?C_STARTUP)
 
   -------         MODULE        ?C_STARTUP
   C:0045H         SEGMENT       ?C_C51STARTUP
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/07/2023  14:56:02  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/10/2023  13:37:17  PAGE 2
 
 
   I:0009H         SEGMENT       ?STACK
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  pro (?C_STARTUP)
   -------         PROC          MOTOR
   -------         DO            
   D:0008H         SYMBOL        i
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/07/2023  14:56:02  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/10/2023  13:37:17  PAGE 3
 
 
   -------         ENDDO         

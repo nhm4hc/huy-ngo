@@ -1,0 +1,145 @@
+C51 COMPILER V9.60.0.0   MODULE_7                                                          12/10/2023 13:56:09 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_7
+OBJECT MODULE PLACED IN .\Objects\module_7.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE module_7.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -module_7.lst) TABS(2) OBJECT(.\Objects\module_7.obj)
+
+line level    source
+
+   1          #include "module_7.h"
+   2          
+   3          void LCD12864_Delay1ms(uint c){
+   4   1        uchar a,b;
+   5   1        for(;c>0; c--)
+   6   1        {
+   7   2          for(b=199; b>0; b--)
+   8   2          {
+   9   3            for(a=1; a>0; a--);
+  10   3          }
+  11   2        }
+  12   1      }
+  13          
+  14          uchar LCD12864_Busy(void){
+  15   1        uchar i = 0;
+  16   1        LCD12864_RS = 0; //Chon lenh
+  17   1        LCD12864_RW = 1; //Chon de doc
+  18   1        LCD12864_EN = 1;
+  19   1        LCD12864_Delay1ms(1);
+  20   1        while((LCD12864_DATAPORT & 0x80) == 0x80) //Phát hien giá tri dã doc
+  21   1        {
+  22   2          i++;
+  23   2          if (i > 100)
+  24   2          {
+  25   3            LCD12864_EN = 0;
+  26   3            return 0; //Neu thoi gian cho` vuot quá, tra ve 0 de báo loi.
+  27   3          }
+  28   2        }
+  29   1        LCD12864_EN = 0;
+  30   1        return 1;
+  31   1      }
+  32          
+  33          void LCD12864_WriteCmd(uchar cmd){
+  34   1        uchar i;
+  35   1        i = 0;
+  36   1        while( LCD12864_Busy() == 0)
+  37   1        {
+  38   2          //LCD12864_Delay1ms(1);
+  39   2          i++;
+  40   2          if(i>100)
+  41   2          {
+  42   3            return; //thoát ra sau khi cho` doi
+  43   3          }
+  44   2        }
+  45   1        LCD12864_RS = 0; //Chon lenh
+  46   1        LCD12864_RW = 0; //Chon ghi
+  47   1        LCD12864_EN = 0; //Thiet bi dau cuoi cho phép khoi tao
+  48   1        LCD12864_DATAPORT = cmd; //Ðat du lieu
+  49   1        LCD12864_EN = 1; // Thoi gian ghi
+  50   1        //LCD12864_Delay1ms(1);
+  51   1        LCD12864_EN = 0;
+  52   1      }
+  53          
+  54          void LCD12864_WriteData(uchar dat){
+C51 COMPILER V9.60.0.0   MODULE_7                                                          12/10/2023 13:56:09 PAGE 2   
+
+  55   1        uchar i;
+  56   1        i = 0;
+  57   1        while( LCD12864_Busy() == 0)
+  58   1        {
+  59   2          //LCD12864_Delay1ms(1);
+  60   2          i++;
+  61   2          if(i>100)
+  62   2          {
+  63   3            return; //thoát ra sau khi cho doi
+  64   3          }
+  65   2        }
+  66   1        LCD12864_RS = 1;//Chon du lieu
+  67   1        LCD12864_RW = 0; //Chon ghi
+  68   1        LCD12864_EN = 0; //Thiet bi dau cuoi cho phép khoi tao
+  69   1        LCD12864_DATAPORT = dat; //Ðat du lieu
+  70   1        LCD12864_EN = 1; // Thoi gian ghi
+  71   1        //LCD12864_Delay1ms(1);
+  72   1        LCD12864_EN = 0;
+  73   1      }
+  74          
+  75          void LCD12864_Init(void){
+  76   1        LCD12864_PSB = 1; //Chon dau vào song song
+  77   1        LCD12864_RST = 1;//dat lai
+  78   1        LCD12864_WriteCmd(0x30); //Chon thao tác lenh co ban
+  79   1        LCD12864_WriteCmd(0x0c); //Hien thi bat và tat con tro
+  80   1        LCD12864_WriteCmd(0x01); //Xóa noi dung hien thi cua LCD12864
+  81   1      }
+  82          
+  83          #ifdef LCD12864_PICTURE
+  84          
+  85          void LCD12864_DrowPic(uchar *a){
+  86   1      
+  87   1        unsigned char i,j;
+  88   1        LCD12864_WriteCmd(0x01);
+  89   1        LCD12864_WriteCmd(0x34); //Bat tap lenh mo rong và tat hien thi ban ve.
+  90   1        
+  91   1        for(i=0;i<32;i++) //Vì LCD có 32 toa do doc nên viet ba muoi hai lan
+  92   1        {
+  93   2          LCD12864_WriteCmd(0x80+i); //Ðau tiên ghi giá tri toa do doc Y
+  94   2          LCD12864_WriteCmd(0x80); //Viet giá tri cua bieu do X
+  95   2          for(j=0; j<16; j++) //Có 16 biT trong abscissa và hai byte du lieu cung duoc ghi trong moi biT
+  96   2          { //Chi can viet 32 lan, khi viet 2 byte thì bieu do se tu dong
+  97   3            LCD12864_WriteData(*a); //thêm 1 nên không can ghi lai dia chi.
+  98   3            a++;
+  99   3          }
+ 100   2        }
+ 101   1        
+ 102   1        for(i=0;i<32;i++) //Vì LCD có 32 toa do doc nên viet ba muoi hai lan
+ 103   1        {
+ 104   2          LCD12864_WriteCmd(0x80+i); //Ðau tiên ghi giá tri toa do doc Y
+ 105   2          LCD12864_WriteCmd(0x88); //Viet giá tri cua bieu do X
+ 106   2          for(j=0; j<16; j++) //Có 16 biT trong abscissa và hai byte du lieu cung duoc ghi trong moi biT
+ 107   2          { //Chi can viet 32 lan, nghi rang sau khi viet 2 byte thì bieu do se tu dong
+ 108   3            LCD12864_WriteData(*a); //Tu dong thêm 1 nên không can ghi lai dia chi.
+ 109   3            a++;
+ 110   3          }
+ 111   2        }
+ 112   1        
+ 113   1        LCD12864_WriteCmd(0x36); //Mo màn hình
+ 114   1        LCD12864_WriteCmd(0x30); //Quay lai tap lenh co bon
+ 115   1      }
+ 116          
+C51 COMPILER V9.60.0.0   MODULE_7                                                          12/10/2023 13:56:09 PAGE 3   
+
+ 117          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    341    ----
+   CONSTANT SIZE    =   1024    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

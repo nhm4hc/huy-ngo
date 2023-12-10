@@ -416,6 +416,26 @@
               <FileType>5</FileType>
               <FilePath>.\module_8.h</FilePath>
             </File>
+            <File>
+              <FileName>module_7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\module_7.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\module_7.h</FilePath>
+            </File>
+            <File>
+              <FileName>module_9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\module_9.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\module_9.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
