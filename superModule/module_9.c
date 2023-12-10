@@ -2,7 +2,7 @@
 
 void  Motor(){ 
 	unsigned char i;
-	for(i=0;i<8;i++)
+	for(i=0;i<FF_length;i++)
 	{
 		if(Direction==1) 
 			GPIO_MOTOR = FFW[i]&0x1f;  

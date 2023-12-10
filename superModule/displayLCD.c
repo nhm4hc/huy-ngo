@@ -3,6 +3,7 @@
 #include "module_7.h"
 #include "module_8.h"
 #include "module_9.h"
+#include "module_11.h"
 
 void IrInit(void){
 	checkRun = 0;
@@ -155,7 +156,7 @@ void runModule(int x){
 				// Tr?ng
 				break;
     case 11:
-				// Tr?ng
+				module_11();
 				break;
     case 12:
 				// Tr?ng

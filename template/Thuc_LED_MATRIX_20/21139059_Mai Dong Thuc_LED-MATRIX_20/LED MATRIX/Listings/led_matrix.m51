@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/17/2023  07:33:49  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/10/2023  14:20:28  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -27,28 +27,27 @@ LINK MAP OF MODULE:  .\Objects\led_matrix (LED_MATRIX)
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-                    0003H     07FDH                  *** GAP ***
-            CODE    0800H     0098H     UNIT         ?CO?LED_MATRIX
-            CODE    0898H     0063H     UNIT         ?PR?MAIN?LED_MATRIX
-            CODE    08FBH     002FH     UNIT         ?PR?_HC595SENDBYTE?LED_MATRIX
-            CODE    092AH     0020H     UNIT         ?PR?_DELAY?LED_MATRIX
-            CODE    094AH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0003H     0098H     UNIT         ?CO?LED_MATRIX
+            CODE    009BH     0063H     UNIT         ?PR?MAIN?LED_MATRIX
+            CODE    00FEH     002FH     UNIT         ?PR?_HC595SENDBYTE?LED_MATRIX
+            CODE    012DH     0020H     UNIT         ?PR?_MODULE11_DELAY?LED_MATRIX
+            CODE    014DH     000CH     UNIT         ?C_C51STARTUP
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\led_matrix (LED_MATRIX)
 
 
-SEGMENT                                 DATA_GROUP 
-  +--> CALLED SEGMENT                 START    LENGTH
------------------------------------------------------
-?C_C51STARTUP                         -----    -----
+SEGMENT                                  DATA_GROUP 
+  +--> CALLED SEGMENT                  START    LENGTH
+------------------------------------------------------
+?C_C51STARTUP                          -----    -----
   +--> ?PR?MAIN?LED_MATRIX
 
-?PR?MAIN?LED_MATRIX                   0008H    0003H
+?PR?MAIN?LED_MATRIX                    0008H    0003H
   +--> ?PR?_HC595SENDBYTE?LED_MATRIX
   +--> ?CO?LED_MATRIX
-  +--> ?PR?_DELAY?LED_MATRIX
+  +--> ?PR?_MODULE11_DELAY?LED_MATRIX
 
 
 
@@ -59,54 +58,53 @@ SYMBOL TABLE OF MODULE:  .\Objects\led_matrix (LED_MATRIX)
 
   -------         MODULE        LED_MATRIX
   C:0000H         SYMBOL        _ICE_DUMMY_
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/17/2023  07:33:49  PAGE 2
-
-
   D:0080H         PUBLIC        P0
-  B:00B0H.6       PUBLIC        SRCLK
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/10/2023  14:20:28  PAGE 2
+
+
   D:00B0H         PUBLIC        P3
-  C:092AH         PUBLIC        _delay
-  C:0898H         PUBLIC        main
-  B:00B0H.5       PUBLIC        RCLK
-  C:0808H         PUBLIC        CHARCODE
-  C:0800H         PUBLIC        TAB
-  B:00B0H.4       PUBLIC        SER
-  C:08FBH         PUBLIC        _Hc595SendByte
-  -------         PROC          _DELAY
+  C:009BH         PUBLIC        main
+  B:00B0H.4       PUBLIC        module11_SER
+  C:000BH         PUBLIC        CHARCODE
+  B:00B0H.6       PUBLIC        module11_SRCLK
+  C:0003H         PUBLIC        TAB
+  C:012DH         PUBLIC        _module11_delay
+  C:00FEH         PUBLIC        _Hc595SendByte
+  B:00B0H.5       PUBLIC        module11_RCLK
+  -------         PROC          _MODULE11_DELAY
   D:0006H         SYMBOL        time
   -------         DO            
   D:0004H         SYMBOL        i
   D:0002H         SYMBOL        j
   -------         ENDDO         
-  C:092AH         LINE#         52
-  C:092AH         LINE#         53
-  C:092AH         LINE#         55
-  C:0934H         LINE#         56
-  C:0949H         LINE#         57
-  -------         ENDPROC       _DELAY
+  C:012DH         LINE#         56
+  C:012DH         LINE#         58
+  C:0137H         LINE#         59
+  C:014CH         LINE#         60
+  -------         ENDPROC       _MODULE11_DELAY
   -------         PROC          _HC595SENDBYTE
   D:0007H         SYMBOL        dat
   -------         DO            
   D:0006H         SYMBOL        a
   -------         ENDDO         
-  C:08FBH         LINE#         58
-  C:08FBH         LINE#         59
-  C:08FBH         LINE#         61
-  C:08FDH         LINE#         62
-  C:08FFH         LINE#         63
-  C:090BH         LINE#         64
-  C:090BH         LINE#         65
-  C:0916H         LINE#         66
-  C:091AH         LINE#         68
-  C:091CH         LINE#         69
-  C:091DH         LINE#         70
-  C:091EH         LINE#         71
-  C:0920H         LINE#         72
-  C:0923H         LINE#         74
-  C:0925H         LINE#         75
-  C:0926H         LINE#         76
-  C:0927H         LINE#         77
-  C:0929H         LINE#         78
+  C:00FEH         LINE#         62
+  C:00FEH         LINE#         63
+  C:00FEH         LINE#         65
+  C:0100H         LINE#         66
+  C:0102H         LINE#         67
+  C:010EH         LINE#         68
+  C:010EH         LINE#         69
+  C:0119H         LINE#         70
+  C:011DH         LINE#         72
+  C:011FH         LINE#         73
+  C:0120H         LINE#         74
+  C:0121H         LINE#         75
+  C:0123H         LINE#         76
+  C:0126H         LINE#         78
+  C:0128H         LINE#         79
+  C:0129H         LINE#         80
+  C:012AH         LINE#         81
+  C:012CH         LINE#         82
   -------         ENDPROC       _HC595SENDBYTE
   -------         PROC          MAIN
   -------         DO            
@@ -114,35 +112,31 @@ SYMBOL TABLE OF MODULE:  .\Objects\led_matrix (LED_MATRIX)
   D:0008H         SYMBOL        j
   D:0009H         SYMBOL        i
   -------         ENDDO         
-  C:0898H         LINE#         80
-  C:0898H         LINE#         81
-  C:0898H         LINE#         85
-  C:0898H         LINE#         86
-  C:0898H         LINE#         87
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/17/2023  07:33:49  PAGE 3
+  C:009BH         LINE#         84
+  C:009BH         LINE#         85
+  C:009BH         LINE#         89
+  C:009BH         LINE#         90
+  C:009BH         LINE#         91
+  C:00A0H         LINE#         92
+  C:00A0H         LINE#         93
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/10/2023  14:20:28  PAGE 3
 
 
-  C:089DH         LINE#         88
-  C:089DH         LINE#         89
-  C:08A9H         LINE#         90
-  C:08A9H         LINE#         92
-  C:08AEH         LINE#         93
-  C:08B5H         LINE#         94
-  C:08D4H         LINE#         95
-  C:08DBH         LINE#         96
-  C:08DEH         LINE#         98
-  C:08EFH         LINE#         99
-  C:08F1H         LINE#         100
-  C:08F7H         LINE#         101
-  C:08F7H         LINE#         102
-  C:08F9H         LINE#         103
-  C:08F9H         LINE#         104
+  C:00ACH         LINE#         94
+  C:00ACH         LINE#         95
+  C:00B1H         LINE#         96
+  C:00B8H         LINE#         97
+  C:00D7H         LINE#         98
+  C:00DEH         LINE#         99
+  C:00E1H         LINE#         100
+  C:00F2H         LINE#         101
+  C:00F4H         LINE#         102
+  C:00FAH         LINE#         103
+  C:00FAH         LINE#         104
+  C:00FCH         LINE#         105
+  C:00FCH         LINE#         106
   -------         ENDPROC       MAIN
   -------         ENDMOD        LED_MATRIX
-
-******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 014AH BYTE (16%) *
-******************************************************************************
 
 Program Size: data=12.0 xdata=0 code=345
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -11,9 +11,12 @@ module 7 - Huy_LCD12864_16
 module 8 - Huy_LED7doan_3
 module 9 - Kha_MotorULN2003_06
 module 10 - Liem_LCD1602_7
-module 11 - Thuc_LED_MATRIX_20
-module 12 - Tin_BUTTON_2
-module 13 - Tri_15
+module 11 - Thuc_LED_MATRIX_20  (Tri_15 the same module 11)
+module 12 - Dat_LED+Button(Polling)_1_2
+
+implement modules (within interrupt):
+module 13 - TanLoc_Thoigianthuc_9
+module 14 - QuangLoc_DS18B20_11
 
 
 -> integration module: super_module

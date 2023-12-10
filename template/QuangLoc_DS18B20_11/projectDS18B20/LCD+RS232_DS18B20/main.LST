@@ -1,0 +1,118 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              12/10/2023 14:50:30 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include"lcd.h"
+   3          #include"temp.h"
+   4          
+   5          uchar CNCHAR[6] = "…„ œ∂»";
+   6          
+   7          // Ham hien thi len LCD
+   8          void LcdDisplay(int);
+   9          
+  10          // Cau hinh USART
+  11          void UsartConfiguration();
+  12          
+  13          void main()
+  14          {
+  15   1          UsartConfiguration();  // Cau hinh USART
+  16   1          LcdInit();             // Khoi tao LCD1602
+  17   1          LcdWriteCom(0x88);     // Viet dia chi, 80 la dia chi khoi tao
+  18   1      
+  19   1          LcdWriteData('C');
+  20   1          while(1)
+  21   1          {
+  22   2              LcdDisplay(Ds18b20ReadTemp()); // Hien thi nhiet do len LCD
+  23   2              // Delay1ms(1000); // Delay 1s
+  24   2          }
+  25   1      }
+  26          
+  27          // Ham LcdDisplay() de hien thi nhiet do doc duoc len LCD
+  28          void LcdDisplay(int temp)
+  29          {
+  30   1          unsigned char i, datas[] = {0, 0, 0, 0, 0}; // Mang luu tru gia tri nhiet do
+  31   1          float tp;
+  32   1          if(temp < 0) // Khi nhiet do la so am
+  33   1          {
+  34   2              LcdWriteCom(0x80); // Viet dia chi, 80 la dia chi khoi tao
+  35   2              SBUF = '-';        // Gui du lieu am den buffer
+  36   2              while(!TI);        // Doi gui xong du lieu
+  37   2              TI = 0;            // Xoa co gui xong
+  38   2      
+  39   2              LcdWriteData('-'); // Hien thi dau '-'
+  40   2              temp = temp - 1;
+  41   2              temp = ~temp;
+  42   2              tp = temp;
+  43   2              temp = tp * 0.0625 * 100 + 0.5;
+  44   2          }
+  45   1          else
+  46   1          {
+  47   2              LcdWriteCom(0x80); // Viet dia chi, 80 la dia chi khoi tao
+  48   2              LcdWriteData('+'); // Hien thi dau '+'
+  49   2              SBUF = '+';        // Gui du lieu duong den buffer
+  50   2              while(!TI);        // Doi gui xong du lieu
+  51   2              TI = 0;            // Xoa co gui xong
+  52   2      
+  53   2              tp = temp;
+  54   2              temp = tp * 0.0625 * 100 + 0.5;
+  55   2          }
+C51 COMPILER V9.60.0.0   MAIN                                                              12/10/2023 14:50:30 PAGE 2   
+
+  56   1      
+  57   1          // Tinh toan va hien thi cac chu so cua nhiet do
+  58   1          datas[0] = temp / 10000;
+  59   1          datas[1] = temp % 10000 / 1000;
+  60   1          datas[2] = temp % 1000 / 100;
+  61   1          datas[3] = temp % 100 / 10;
+  62   1          datas[4] = temp % 10;
+  63   1      
+  64   1          // Hien thi nhiet do
+  65   1          for(i = 0; i < 5; i++)
+  66   1          {
+  67   2              LcdWriteCom(0x82 + i);
+  68   2              LcdWriteData('0' + datas[i]);
+  69   2              SBUF = '0' + datas[i];
+  70   2              while(!TI);
+  71   2              TI = 0;
+  72   2          }
+  73   1      
+  74   1          for(i = 0; i < 6; i++)
+  75   1          {
+  76   2              SBUF = CNCHAR[i];
+  77   2              while(!TI);
+  78   2              TI = 0;
+  79   2          }
+  80   1      }
+  81          
+  82          // Ham cau hinh USART
+  83          void UsartConfiguration()
+  84          {
+  85   1          SCON = 0X50; // Che do lam viec 1
+  86   1          TMOD = 0X20; // Che do timer 2
+  87   1          PCON = 0X80; // Tang toc do baud
+  88   1          TH1 = 0XF3;  // Thiet lap gia tri khoi tao timer, baud rate 4800
+  89   1          TL1 = 0XF3;
+  90   1          // ES = 1;  // Mo ngat nhan
+  91   1          // EA = 1;  // Mo ngat tong
+  92   1          TR1 = 1;    // Khoi dong timer
+  93   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    365    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

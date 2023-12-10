@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MODULE_9                                                          12/10/2023 13:56:09 PAGE 1   
+C51 COMPILER V9.60.0.0   MODULE_9                                                          12/10/2023 14:32:25 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_9
@@ -12,7 +12,7 @@ line level    source
    2          
    3          void  Motor(){ 
    4   1        unsigned char i;
-   5   1        for(i=0;i<8;i++)
+   5   1        for(i=0;i<FF_length;i++)
    6   1        {
    7   2          if(Direction==1) 
    8   2            GPIO_MOTOR = FFW[i]&0x1f;  
@@ -62,7 +62,7 @@ line level    source
   52   3          }
   53   2          i=0;
   54   2        }     
-C51 COMPILER V9.60.0.0   MODULE_9                                                          12/10/2023 13:56:09 PAGE 2   
+C51 COMPILER V9.60.0.0   MODULE_9                                                          12/10/2023 14:32:25 PAGE 2   
 
   55   1        if(module9_K3==0)   
   56   1        {

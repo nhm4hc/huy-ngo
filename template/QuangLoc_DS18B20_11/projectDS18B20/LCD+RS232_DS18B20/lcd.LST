@@ -1,0 +1,139 @@
+C51 COMPILER V9.60.0.0   LCD                                                               12/10/2023 14:50:30 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN lcd.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE lcd.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include"lcd.h"
+   2          
+   3          // Ham delay 1ms
+   4          void Lcd1602_Delay1ms(uint c)   // Khong co sai so
+   5          {
+   6   1          uchar a,b;
+   7   1          for (; c>0; c--)
+   8   1          {
+   9   2              for (b=199;b>0;b--)
+  10   2              {
+  11   3                  for(a=1;a>0;a--);
+  12   3              }      
+  13   2          }
+  14   1      }
+  15          
+  16          // Viet lenh vao LCD
+  17          #ifndef LCD1602_4PINS   // Neu khong dinh nghia LCD1602_4PINS
+              void LcdWriteCom(uchar com)    // Viet lenh
+              {
+                  LCD1602_E = 0;     // Enable low
+                  LCD1602_RS = 0;    // Chon lenh
+                  LCD1602_RW = 0;    // Chon ghi du lieu
+              
+                  LCD1602_DATAPINS = com;     // Dat lenh vao
+                  Lcd1602_Delay1ms(1);        // Doi du lieu on dinh
+              
+                  LCD1602_E = 1;              // Bat dau ghi
+                  Lcd1602_Delay1ms(5);        // Giu thoi gian
+                  LCD1602_E = 0;
+              }
+              #else 
+  32          void LcdWriteCom(uchar com)    // Viet lenh
+  33          {
+  34   1          LCD1602_E = 0;    // Enable low
+  35   1          LCD1602_RS = 0;   // Chon lenh
+  36   1          LCD1602_RW = 0;   // Chon ghi du lieu
+  37   1      
+  38   1          LCD1602_DATAPINS = com;    // Gui 4 bit cao
+  39   1          Lcd1602_Delay1ms(1);
+  40   1      
+  41   1          LCD1602_E = 1;    // Bat dau ghi
+  42   1          Lcd1602_Delay1ms(5);
+  43   1          LCD1602_E = 0;
+  44   1      
+  45   1          LCD1602_DATAPINS = com << 4; // Gui 4 bit thap
+  46   1          Lcd1602_Delay1ms(1);
+  47   1      
+  48   1          LCD1602_E = 1;    // Bat dau ghi
+  49   1          Lcd1602_Delay1ms(5);
+  50   1          LCD1602_E = 0;
+  51   1      }
+  52          #endif
+  53          
+  54          // Viet du lieu vao LCD
+  55          #ifndef LCD1602_4PINS          
+C51 COMPILER V9.60.0.0   LCD                                                               12/10/2023 14:50:30 PAGE 2   
+
+              void LcdWriteData(uchar dat)            // Viet du lieu
+              {
+                  LCD1602_E = 0;    // Enable low
+                  LCD1602_RS = 1;   // Chon du lieu
+                  LCD1602_RW = 0;   // Chon ghi du lieu
+              
+                  LCD1602_DATAPINS = dat; // Dat du lieu vao
+                  Lcd1602_Delay1ms(1);
+              
+                  LCD1602_E = 1;   // Bat dau ghi
+                  Lcd1602_Delay1ms(5);   // Giu thoi gian
+                  LCD1602_E = 0;
+              }
+              #else
+  70          void LcdWriteData(uchar dat)            // Viet du lieu
+  71          {
+  72   1          LCD1602_E = 0;    // Enable low
+  73   1          LCD1602_RS = 1;   // Chon du lieu
+  74   1          LCD1602_RW = 0;   // Chon ghi du lieu
+  75   1      
+  76   1          LCD1602_DATAPINS = dat;    // Gui 4 bit cao
+  77   1          Lcd1602_Delay1ms(1);
+  78   1      
+  79   1          LCD1602_E = 1;    // Bat dau ghi
+  80   1          Lcd1602_Delay1ms(5);
+  81   1          LCD1602_E = 0;
+  82   1      
+  83   1          LCD1602_DATAPINS = dat << 4; // Gui 4 bit thap
+  84   1          Lcd1602_Delay1ms(1);
+  85   1      
+  86   1          LCD1602_E = 1;    // Bat dau ghi
+  87   1          Lcd1602_Delay1ms(5);
+  88   1          LCD1602_E = 0;
+  89   1      }
+  90          #endif
+  91          
+  92          // Khoi tao LCD
+  93          #ifndef LCD1602_4PINS
+              void LcdInit()                          // Khoi tao LCD
+              {
+                  LcdWriteCom(0x38);  // Bat hien thi
+                  LcdWriteCom(0x0c);  // Hien thi khong co con tro
+                  LcdWriteCom(0x06);  // Ghi mot ky tu, tro tang 1
+                  LcdWriteCom(0x01);  // Xoa man hinh
+                  LcdWriteCom(0x80);  // Dat con tro ve dau dong
+              }
+              #else
+ 103          void LcdInit()                          // Khoi tao LCD
+ 104          {
+ 105   1          LcdWriteCom(0x32);   // Chuyen tu 8 bit sang 4 bit
+ 106   1          LcdWriteCom(0x28);   // Khoi tao o che do 4 bit
+ 107   1          LcdWriteCom(0x0c);  // Hien thi khong co con tro
+ 108   1          LcdWriteCom(0x06);  // Ghi mot ky tu, tro tang 1
+ 109   1          LcdWriteCom(0x01);  // Xoa man hinh
+ 110   1          LcdWriteCom(0x80);  // Dat con tro ve dau dong
+ 111   1      }
+ 112          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    142    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.60.0.0   LCD                                                               12/10/2023 14:50:30 PAGE 3   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -4,6 +4,7 @@
 ".\Objects\LCD1602.obj",
 ".\Objects\module_8.obj",
 ".\Objects\module_7.obj",
-".\Objects\module_9.obj" 
+".\Objects\module_9.obj",
+".\Objects\module_11.obj" 
 TO ".\Objects\superModule" 
 PRINT(".\Listings\superModule.m51") RAMSIZE(256) 

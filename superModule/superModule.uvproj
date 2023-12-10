@@ -436,6 +436,21 @@
               <FileType>5</FileType>
               <FilePath>.\module_9.h</FilePath>
             </File>
+            <File>
+              <FileName>module_11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\module_11.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\module_11.h</FilePath>
+            </File>
+            <File>
+              <FileName>intrins.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\intrins.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
