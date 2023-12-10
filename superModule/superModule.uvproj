@@ -417,6 +417,16 @@
               <FilePath>.\module_1.h</FilePath>
             </File>
             <File>
+              <FileName>module_2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\module_2.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\module_2.h</FilePath>
+            </File>
+            <File>
               <FileName>module_7.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\module_7.c</FilePath>

@@ -1,6 +1,7 @@
 #include "displayLCD.h"
 #include "LCD1602.h"
 #include "module_1.h"
+#include "module_2.h"
 #include "module_7.h"
 #include "module_8.h"
 #include "module_9.h"
@@ -132,7 +133,7 @@ void runModule(int x){
 				module_1();
 				break;
     case 2:
-				// empty
+				module_2();
 				break;
     case 3:
 				// empty
@@ -183,6 +184,7 @@ void runModule(int x){
 
 void disableInterrupt(void){
 	ET1 = 0;
+	ET0 = 0;
 }
 
 void displayLCD(void){
