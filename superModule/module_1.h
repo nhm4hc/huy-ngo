@@ -9,7 +9,6 @@ static bit DIR;
 static unsigned int count, value, timer1;
 
 void Time1Config(void);
-void Time1(void);
 void module_1(void);
 
 #endif

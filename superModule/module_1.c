@@ -9,13 +9,6 @@ void Time1Config(void){
 	TR1 = 1;
 }
 
-void Time1(void) interrupt 3{
-	TH1 = 0xFF;
-	TL1 = 0xFf;
-	timer1++;
-	count++;
-}
-
 void module_1(void){
 	Time1Config();
 	if(count > 100)
