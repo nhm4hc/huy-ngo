@@ -6,7 +6,7 @@
 sbit module1_PWM = P2^1;
 static bit DIR;
 
-static unsigned int module1_count, value, timer1;
+static unsigned int module1_count, value, module1_timer1;
 
 void Time1Config(void);
 void module_1(void);

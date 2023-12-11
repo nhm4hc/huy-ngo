@@ -1,10 +1,8 @@
 #include "module_2.h"
-#include "interruptPublish.h"
 
 unsigned int module2_count = 0;
 
 void module2_delayMS(unsigned int t){
-	SET_BIT(c_interrupt,MODULE_0);
 	TMOD = 0x01;
 	TH0 = 0xFC;
 	TL0 = 0x18;
@@ -13,9 +11,14 @@ void module2_delayMS(unsigned int t){
 	module2_count =0;
 	TR0 =1;
 	while(module2_count < t);
-	led = 0;
 	ET0 = 0;
 	TR0 =0;
+}
+
+void timer0(void) interrupt 1{
+		TH0 = 0xFC;
+		TL0 = 0x18;
+		module2_count++;
 }
 
 void smg_display1(void){

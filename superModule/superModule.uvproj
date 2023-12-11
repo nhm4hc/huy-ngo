@@ -177,7 +177,7 @@
           </Flash1>
           <bUseTDR>0</bUseTDR>
           <Flash2></Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -233,7 +233,7 @@
               <RCB>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0xffff</Size>
               </RCB>
               <RXB>
                 <Type>0</Type>
@@ -315,8 +315,8 @@
             <UseInterruptVector>1</UseInterruptVector>
             <Fuzzy>3</Fuzzy>
             <Optimize>8</Optimize>
-            <WarningLevel>2</WarningLevel>
-            <SizeSpeed>1</SizeSpeed>
+            <WarningLevel>1</WarningLevel>
+            <SizeSpeed>0</SizeSpeed>
             <ObjectExtend>1</ObjectExtend>
             <ACallAJmp>0</ACallAJmp>
             <InterruptVectorAddress>0</InterruptVectorAddress>
@@ -417,16 +417,6 @@
               <FilePath>.\module_2.h</FilePath>
             </File>
             <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\i2c.h</FilePath>
-            </File>
-            <File>
               <FileName>module_7.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\module_7.c</FilePath>
@@ -492,14 +482,14 @@
               <FilePath>.\module_15.h</FilePath>
             </File>
             <File>
-              <FileName>interruptPublish.c</FileName>
+              <FileName>module_1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\interruptPublish.c</FilePath>
+              <FilePath>.\module_1.c</FilePath>
             </File>
             <File>
-              <FileName>interruptPublish.h</FileName>
+              <FileName>module_1.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\interruptPublish.h</FilePath>
+              <FilePath>.\module_1.h</FilePath>
             </File>
           </Files>
         </Group>

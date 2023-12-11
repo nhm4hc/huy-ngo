@@ -1,16 +1,13 @@
 #include "displayLCD.h"
 #include "LCD1602.h"
-//#include "module_1.h"
+#include "module_1.h"
 #include "module_2.h"
-//#include "module_3.h"
-//#include "module_4.h"
 #include "module_7.h"
 #include "module_8.h"
 #include "module_9.h"
 #include "module_11.h"
 #include "module_12.h"
 #include "module_15.h"
-#include "interruptPublish.h"
 
 void IrInit(void){
 	checkRun = 0;
@@ -188,7 +185,6 @@ void runModule(int x){
 void disableInterrupt(void){
 	ET1 = 0;
 	ET0 = 0;
-	c_interrupt = 0;
 }
 
 void displayLCD(void){

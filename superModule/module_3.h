@@ -25,7 +25,6 @@ void At24c02Write(unsigned char ,unsigned char);
 unsigned char At24c02Read(unsigned char );
 void module3_Delay1ms(void);
 void Timer0Configuration(void);
-void DigDisplay(void);
 void module_3(void);
 
 #endif

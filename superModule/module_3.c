@@ -1,4 +1,5 @@
 #include "module_3.h"
+#include "interruptPublish.h"
 
 void At24c02Write(unsigned char addr,unsigned char dat){
 	I2cStart();
@@ -29,6 +30,7 @@ void module3_Delay1ms(void)
 }
 
 void Timer0Configuration(void){
+	SET_BIT(c_interrupt,MODULE_1);
 	Num = 0;
 	TMOD=0X02;
 	TH0=0X9C;	
@@ -36,33 +38,6 @@ void Timer0Configuration(void){
 	ET0=1;
 	EA=1;
 	TR0=1;	
-}
-
-void DigDisplay(void) interrupt 1{ 
-	P1 = disp[7];
-	switch(Num)	 
-	{
-		case(7):
-			module3_LSA=0; module3_LSB=0; module3_LSC=0; break;
-		case(6):
-			module3_LSA=1; module3_LSB=0; module3_LSC=0; break;
-		case(5):
-			module3_LSA=0; module3_LSB=1; module3_LSC=0; break;
-		case(4):
-			module3_LSA=1; module3_LSB=1; module3_LSC=0; break;
-		case(3):
-			module3_LSA=0; module3_LSB=0; module3_LSC=1; break;
-		case(2):
-			module3_LSA=1; module3_LSB=0; module3_LSC=1; break;
-		case(1):
-			module3_LSA=0; module3_LSB=1; module3_LSC=1; break;
-		case(0):
-			module3_LSA=1; module3_LSB=1; module3_LSC=1; break;	
-	}
-	DIG = disp[Num]; 
-	Num++;
-	if(Num>7)
-		Num=0;
 }
 
 void module_3(void){

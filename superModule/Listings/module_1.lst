@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   MODULE_1                                                          12/11/2023 23:06:39 PAGE 1   
+C51 COMPILER V9.60.0.0   MODULE_1                                                          12/12/2023 00:08:58 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_1
 OBJECT MODULE PLACED IN .\Objects\module_1.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE module_1.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
-                    -module_1.lst) TABS(2) OBJECT(.\Objects\module_1.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE module_1.c WARNINGLEVEL(1) OPTIMIZE(8,SIZE) BROWSE DEBUG OBJECTEXTEND PR
+                    -INT(.\Listings\module_1.lst) TABS(2) OBJECT(.\Objects\module_1.obj)
 
 line level    source
 
@@ -19,44 +19,63 @@ line level    source
    9   1        TR1 = 1;
   10   1      }
   11          
-  12          void module_1(void){
-  13   1        Time1Config();
-  14   1        if(count > 100)
-*** ERROR C202 IN LINE 14 OF module_1.c: 'count': undefined identifier
-  15   1        {
-  16   2          count = 0;
-*** ERROR C202 IN LINE 16 OF module_1.c: 'count': undefined identifier
-  17   2          if(DIR == 1)
-  18   2          {
-  19   3            value++;
-  20   3          }
-  21   2          if(DIR == 0)
-  22   2          {
-  23   3            value--;
-  24   3          }
-  25   2        }
-  26   1      
-  27   1        if(value == 1000)
-  28   1        {
-  29   2          DIR = 0;
-  30   2        }
-  31   1        if(value == 0)
-  32   1        {
-  33   2          DIR = 1;
-  34   2        }
-  35   1        
-  36   1        if(timer1 > 1000)
-  37   1        {
-  38   2          timer1 = 0;
-  39   2        }
-  40   1        if(timer1 < value)
-  41   1        {
-  42   2          module1_PWM = 1;
-  43   2        }
-  44   1        else
-  45   1        {
-  46   2          module1_PWM = 0;
-  47   2        }
-  48   1      }
+  12          void Time1(void) interrupt 3{
+  13   1          TH1 = 0xFF;
+  14   1          TL1 = 0xFf;
+  15   1          module1_timer1++;
+  16   1          module1_count++;
+  17   1      }
+  18          
+  19          void module_1(void){
+  20   1        Time1Config();
+  21   1        if(module1_count > 100)
+  22   1        {
+  23   2          module1_count = 0;
+  24   2          if(DIR == 1)
+  25   2          {
+  26   3            value++;
+  27   3          }
+  28   2          if(DIR == 0)
+  29   2          {
+  30   3            value--;
+  31   3          }
+  32   2        }
+  33   1      
+  34   1        if(value == 1000)
+  35   1        {
+  36   2          DIR = 0;
+  37   2        }
+  38   1        if(value == 0)
+  39   1        {
+  40   2          DIR = 1;
+  41   2        }
+  42   1        
+  43   1        if(module1_timer1 > 1000)
+  44   1        {
+  45   2          module1_timer1 = 0;
+  46   2        }
+  47   1        if(module1_timer1 < value)
+  48   1        {
+  49   2          module1_PWM = 1;
+  50   2        }
+  51   1        else
+  52   1        {
+  53   2          module1_PWM = 0;
+  54   2        }
+C51 COMPILER V9.60.0.0   MODULE_1                                                          12/12/2023 00:08:58 PAGE 2   
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  2 ERROR(S)
+  55   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    137    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

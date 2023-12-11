@@ -9,11 +9,18 @@ void Time1Config(void){
 	TR1 = 1;
 }
 
+void Time1(void) interrupt 3{
+		TH1 = 0xFF;
+		TL1 = 0xFf;
+		module1_timer1++;
+		module1_count++;
+}
+
 void module_1(void){
 	Time1Config();
-	if(count > 100)
+	if(module1_count > 100)
 	{
-		count = 0;
+		module1_count = 0;
 		if(DIR == 1)
 		{
 		  value++;
@@ -33,11 +40,11 @@ void module_1(void){
 	  DIR = 1;
 	}
 	
-	if(timer1 > 1000)
+	if(module1_timer1 > 1000)
 	{
-		timer1 = 0;
+		module1_timer1 = 0;
 	}
-	if(timer1 < value)
+	if(module1_timer1 < value)
 	{
 		module1_PWM = 1;
 	}
