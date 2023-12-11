@@ -1,8 +1,8 @@
 modules within interrupt:
-module 1 - Duy_DAC(PWM)_14
-module 2 - Huy_button_8led7_18
-module 3 - Quy_EEPROM24_13 (only run on actual kit, not simulation kit)
-module 4 - Son_PWM-DC_17
+module 1 - Duy_DAC(PWM)_14 (dung timer1) 
+module 2 - Huy_button_8led7_18 (dung timer0) 
+module 3 - Quy_EEPROM24_13 (dung timer0) (only run on actual kit, not simulation kit)
+module 4 - Son_PWM-DC_17 (dung timer1) 
 module 5 - Tai_Timer_8
 module 6 - Tam_buzzer_19
 

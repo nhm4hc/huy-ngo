@@ -4,7 +4,6 @@
 ".\Objects\LCD1602.obj",
 ".\Objects\module_1.obj",
 ".\Objects\module_2.obj",
-".\Objects\module_3.obj",
 ".\Objects\i2c.obj",
 ".\Objects\module_7.obj",
 ".\Objects\module_8.obj",

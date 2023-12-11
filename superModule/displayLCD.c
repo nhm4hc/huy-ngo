@@ -2,7 +2,8 @@
 #include "LCD1602.h"
 #include "module_1.h"
 #include "module_2.h"
-#include "module_3.h"
+//#include "module_3.h"
+//#include "module_4.h"
 #include "module_7.h"
 #include "module_8.h"
 #include "module_9.h"
@@ -137,10 +138,10 @@ void runModule(int x){
 				module_2();
 				break;
     case 3:
-				module_3();
+				//module_3();
 				break;
 		case 4:
-				// empty
+				//module_4();
 				break;
 		case 5:
 				// empty

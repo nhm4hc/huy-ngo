@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MODULE_2                                                          12/11/2023 09:43:26 PAGE 1   
+C51 COMPILER V9.60.0.0   MODULE_2                                                          12/11/2023 14:45:10 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_2
@@ -62,7 +62,7 @@ line level    source
   52   3            case 11: module2_LSC=1; module2_LSB=0; module2_LSA=0; break;
   53   3            case 12: module2_LSC=0; module2_LSB=1; module2_LSA=1; break;
   54   3            case 13: module2_LSC=0; module2_LSB=1; module2_LSA=0; break;
-C51 COMPILER V9.60.0.0   MODULE_2                                                          12/11/2023 09:43:26 PAGE 2   
+C51 COMPILER V9.60.0.0   MODULE_2                                                          12/11/2023 14:45:10 PAGE 2   
 
   55   3            case 14: module2_LSC=0; module2_LSB=0; module2_LSA=1; break;
   56   3            case 15: module2_LSC=0; module2_LSB=0; module2_LSA=0; break;;

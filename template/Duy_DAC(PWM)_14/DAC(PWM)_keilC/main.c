@@ -4,6 +4,7 @@ sbit module1_PWM = P2^1;
 bit DIR;
 
 unsigned int count, value, timer1;
+unsigned char flag_1;
 
 void Time1Config(void);
 void Time1(void);
@@ -15,14 +16,18 @@ void Time1Config(void){
 
 	ET1 = 1;
 	EA = 1;
+	flag_1 = 1;
 	TR1 = 1;
 }
 
 void Time1(void) interrupt 3{
+	if(flag_1 == 1)
+	{
 		TH1 = 0xFF;
 		TL1 = 0xFf;
 		timer1++;
 		count++;
+	}
 }
 
 void main(void){

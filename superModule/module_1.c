@@ -4,17 +4,16 @@ void Time1Config(void){
 	TMOD|= 0x10;
 	TH1 = 0xFF;
 	TL1 = 0xff;
-
 	ET1 = 1;
 	EA = 1;
 	TR1 = 1;
 }
 
 void Time1(void) interrupt 3{
-		TH1 = 0xFF;
-		TL1 = 0xFf;
-		timer1++;
-		count++;
+	TH1 = 0xFF;
+	TL1 = 0xFf;
+	timer1++;
+	count++;
 }
 
 void module_1(void){

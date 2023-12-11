@@ -26,11 +26,10 @@ Rebuild target 'Target 1'
 assembling STARTUP.A51...
 compiling main.c...
 compiling displayLCD.c...
-displayLCD.c(166): warning C206: 'module_11': missing function-prototype
+displayLCD.c(167): warning C206: 'module_11': missing function-prototype
 compiling LCD1602.c...
 compiling module_1.c...
 compiling module_2.c...
-compiling module_3.c...
 compiling i2c.c...
 compiling module_7.c...
 compiling module_8.c...
@@ -42,18 +41,23 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?CO?MAIN
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2CSTART?I2C
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2CSTOP?I2C
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2CSENDBYTE?I2C
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2CREADBYTE?I2C
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?LCD12864_INIT?MODULE_7
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD12864_DROWPIC?MODULE_7
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?CO?MODULE_7
-*** WARNING L5: CODE SPACE MEMORY OVERLAP
-    FROM:    000BH
-    TO:      000DH
-Program Size: data=126.2 xdata=0 code=6345
+Program Size: data=104.2 xdata=0 code=5467
 creating hex file from ".\Objects\superModule"...
-".\Objects\superModule" - 0 Error(s), 6 Warning(s).
-Build Time Elapsed:  00:00:03
+".\Objects\superModule" - 0 Error(s), 9 Warning(s).
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
