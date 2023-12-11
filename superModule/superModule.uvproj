@@ -427,6 +427,26 @@
               <FilePath>.\module_2.h</FilePath>
             </File>
             <File>
+              <FileName>module_3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\module_3.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\module_3.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\i2c.h</FilePath>
+            </File>
+            <File>
               <FileName>module_7.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\module_7.c</FilePath>

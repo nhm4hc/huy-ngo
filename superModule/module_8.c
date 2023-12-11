@@ -29,12 +29,12 @@ void chonKey(unsigned int k){
 }
 
 void module_8(void){
-	chonKey(0); GPIO_DIG=DIG_CODE[0]; module8_delayMS(3);
-	chonKey(1); GPIO_DIG=DIG_CODE[2]; module8_delayMS(3);
-	chonKey(2); GPIO_DIG=DIG_CODE[0]; module8_delayMS(3);
-	chonKey(3);	GPIO_DIG=DIG_CODE[9]; module8_delayMS(3);
-	chonKey(4); GPIO_DIG=DIG_CODE[3]; module8_delayMS(3);
-	chonKey(5);	GPIO_DIG=DIG_CODE[1];	module8_delayMS(3);
-	chonKey(6); GPIO_DIG=DIG_CODE[1];	module8_delayMS(3);
-	chonKey(7);	GPIO_DIG=DIG_CODE[2]; module8_delayMS(3);
+	chonKey(0); GPIO_DIG = DIG_CODE_8[0]; module8_delayMS(3);
+	chonKey(1); GPIO_DIG = DIG_CODE_8[2]; module8_delayMS(3);
+	chonKey(2); GPIO_DIG = DIG_CODE_8[0]; module8_delayMS(3);
+	chonKey(3);	GPIO_DIG = DIG_CODE_8[9]; module8_delayMS(3);
+	chonKey(4); GPIO_DIG = DIG_CODE_8[3]; module8_delayMS(3);
+	chonKey(5);	GPIO_DIG = DIG_CODE_8[1];	module8_delayMS(3);
+	chonKey(6); GPIO_DIG = DIG_CODE_8[1];	module8_delayMS(3);
+	chonKey(7);	GPIO_DIG = DIG_CODE_8[2]; module8_delayMS(3);
 }

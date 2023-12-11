@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MODULE_1                                                          12/10/2023 21:47:18 PAGE 1   
+C51 COMPILER V9.60.0.0   MODULE_1                                                          12/11/2023 09:43:26 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_1
@@ -62,7 +62,7 @@ line level    source
   52   1        else
   53   1        {
   54   2          module1_PWM = 0;
-C51 COMPILER V9.60.0.0   MODULE_1                                                          12/10/2023 21:47:18 PAGE 2   
+C51 COMPILER V9.60.0.0   MODULE_1                                                          12/11/2023 09:43:26 PAGE 2   
 
   55   2        }
   56   1      }

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              12/07/2023 18:36:17 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              12/11/2023 09:45:42 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
@@ -7,227 +7,175 @@ COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE 
 
 line level    source
 
-   1          /*******************************************************************************
-   2          * ÊµÑéÃû        : EEPROMÊµÑé
-   3          * Ê¹ÓÃµÄIO      : 
-   4          * ÊµÑéÐ§¹û      : °´K1±£´æÏÔÊ¾µÄÊý¾Ý£¬°´K2¶ÁÈ¡ÉÏ´Î±£´æµÄÊý¾Ý£¬°´K3ÏÔÊ¾Êý¾Ý¼ÓÒ»£¬
-   5          *°´K4ÏÔÊ¾Êý¾ÝÇåÁã¡£
-   6          * ×¢Òâ          £ºÓÉÓÚP3.2¿Ú¸úºìÍâÏß¹²ÓÃ£¬ËùÒÔ×ö°´¼üÊµÑéÊ±ÎªÁË²»ÈÃºìÍâÏßÓ°ÏìÊµÑéÐ§¹û£¬×îºÃ°ÑºìÍâÏßÏÈ
-   7          *È¡ÏÂÀ´¡£
-   8          *
-   9          *********************************************************************************/
-  10          #include<reg51.h>
-  11          #include"i2c.h"
-  12          //ÊýÂë¹ÜIO
-  13          #define DIG P0
-  14          sbit LSA=P2^2;
-  15          sbit LSB=P2^3;
-  16          sbit LSC=P2^4;
-  17          //°´¼üIO
-  18          sbit K1=P3^1;
-  19          sbit K2=P3^0;
-  20          sbit K3=P3^2;
-  21          sbit K4=P3^3;
-  22          void At24c02Write(unsigned char ,unsigned char );
-  23          unsigned char At24c02Read(unsigned char );
-  24          void Delay1ms();
-  25          void Timer0Configuration();
-  26          unsigned char code DIG_CODE[10]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f};
-  27          unsigned char Num=0;
-  28          unsigned int disp[8]={0x3f,0x3f,0x3f,0x3f,0x3f,0x3f,0x3f,0x3f};
-  29          /*******************************************************************************
-  30          * º¯ÊýÃû         : main
-  31          * º¯Êý¹¦ÄÜ       : Ö÷º¯Êý
-  32          * ÊäÈë           : ÎÞ
-  33          * Êä³ö           : ÎÞ
-  34          *******************************************************************************/
-  35          
-  36          void main()
-  37          {
-  38   1        unsigned int num0=0,num1=0,n;
-  39   1        Timer0Configuration();
-  40   1        while(1)
-  41   1        {
-  42   2          if(K1==0)   // ghi giá tri vào eeprom
-  43   2          {
-  44   3            Delay1ms();
-  45   3            if(K1==0)
-  46   3              At24c02Write(2,num0);
-  47   3            while((n<200)&&(K3==0))
-  48   3            {
-  49   4              n++;
-  50   4              Delay1ms(); 
-  51   4            }     
-  52   3            n=0;
-  53   3            n=0;
-  54   3          }
-  55   2          
-C51 COMPILER V9.60.0.0   MAIN                                                              12/07/2023 18:36:17 PAGE 2   
+   1          #include<reg51.h>
+   2          #include"i2c.h"
+   3          
+   4          #define DIG P0
+   5          
+   6          sbit module3_LSA = P2^2;
+   7          sbit module3_LSB = P2^3;
+   8          sbit module3_LSC = P2^4;
+   9          
+  10          sbit module3_K1 = P3^1;
+  11          sbit module3_K2 = P3^0;
+  12          sbit module3_K3 = P3^2;
+  13          sbit module3_K4 = P3^3;
+  14          
+  15          const unsigned char code DIG_CODE[10]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f};
+  16          unsigned char Num;
+  17          unsigned char disp[8]={0x3f,0x3f,0x3f,0x3f,0x3f,0x3f,0x3f,0x3f};
+  18          
+  19          void At24c02Write(unsigned char ,unsigned char);
+  20          unsigned char At24c02Read(unsigned char );
+  21          void Delay1ms(void);
+  22          void Timer0Configuration(void);
+  23          
+  24          void At24c02Write(unsigned char addr,unsigned char dat){
+  25   1        I2cStart();
+  26   1        I2cSendByte(0xa2);//·// ten eeprom
+  27   1        I2cSendByte(addr);//·dia chi trong eeprom
+  28   1        I2cSendByte(dat); //·data eeprom
+  29   1        I2cStop();
+  30   1      }
+  31          
+  32          unsigned char At24c02Read(unsigned char addr){
+  33   1        unsigned char num;
+  34   1        I2cStart();
+  35   1        I2cSendByte(0xa2); 
+  36   1        I2cSendByte(addr); 
+  37   1        I2cStart();
+  38   1        I2cSendByte(0xa3); 
+  39   1        num = I2cReadByte(); 
+  40   1        I2cStop();
+  41   1        return num; 
+  42   1      }
+  43          
+  44          void Delay1ms(void)   
+  45          {
+  46   1          unsigned char a,b,c;
+  47   1          for(c=1;c>0;c--)
+  48   1              for(b=142;b>0;b--)
+  49   1                  for(a=2;a>0;a--);
+  50   1      }
+  51          
+  52          void Timer0Configuration(void){
+  53   1        Num = 0;
+  54   1        TMOD=0X02;
+  55   1        TH0=0X9C; 
+C51 COMPILER V9.60.0.0   MAIN                                                              12/11/2023 09:45:42 PAGE 2   
 
-  56   2          if(K2==0)   // doc giá tri tu eeprom
-  57   2          {
-  58   3            Delay1ms();
-  59   3            if(K2==0)
-  60   3              num0=At24c02Read(2);
-  61   3            while((n<200)&&(K3==0))
-  62   3            {
-  63   4              n++;
-  64   4              Delay1ms(); 
-  65   4            }     
-  66   3            n=0;
-  67   3          }     
-  68   2          if(K3==0)
-  69   2          {
-  70   3            Delay1ms();
-  71   3            if(K3==0)
-  72   3              num0++;
-  73   3            while((n<200)&&(K3==0))
-  74   3            {
-  75   4              n++;
-  76   4              Delay1ms(); 
-  77   4            }     
-  78   3            n=0;
-  79   3            if(num0==256)
-  80   3              num0=0;
-  81   3          }
-  82   2            
-  83   2          if(K4==0)
-  84   2          {
-  85   3            Delay1ms();
-  86   3            if(K4==0)
-  87   3              num0=0;
-  88   3            while((n<200)&&(K3==0))
-  89   3            {
-  90   4              n++;
-  91   4              Delay1ms(); 
-  92   4            }     
-  93   3            n=0;
-  94   3          }     
-  95   2          disp[0]=DIG_CODE[num1/1000];//Ç§Î»
-  96   2          disp[1]=DIG_CODE[num1%1000/100];//°ÙÎ»
-  97   2          disp[2]=DIG_CODE[num1%1000%100/10];//Ê®Î»
-  98   2          disp[3]=DIG_CODE[num1%1000%100%10];//¸öÎ»
-  99   2          disp[4]=DIG_CODE[num0/1000];//Ç§Î»
- 100   2          disp[5]=DIG_CODE[num0%1000/100];//°ÙÎ»
- 101   2          disp[6]=DIG_CODE[num0%1000%100/10];//¸öÎ»
- 102   2          disp[7]=DIG_CODE[num0%1000%100%10]; 
- 103   2        }
- 104   1      }                  
- 105          /*******************************************************************************
- 106          * º¯ÊýÃû         : Timer0Configuration()
- 107          * º¯Êý¹¦ÄÜ       : ÉèÖÃ¼ÆÊ±Æ÷
- 108          * ÊäÈë           : ÎÞ
- 109          * Êä³ö           : ÎÞ
- 110          *******************************************************************************/
- 111          
- 112          void Timer0Configuration()
- 113          {
- 114   1        TMOD=0X02;//Ñ¡ÔñÎª¶¨Ê±Æ÷Ä£Ê½£¬¹¤×÷·½Ê½2£¬½öÓÃTRX´ò¿ªÆô¶¯¡£
- 115   1      
- 116   1        TH0=0X9C; //¸ø¶¨Ê±Æ÷¸³³õÖµ£¬¶¨Ê±100us
- 117   1        TL0=0X9C; 
-C51 COMPILER V9.60.0.0   MAIN                                                              12/07/2023 18:36:17 PAGE 3   
+  56   1        TL0=0X9C; 
+  57   1        ET0=1;
+  58   1        EA=1;
+  59   1        TR0=1;  
+  60   1      }
+  61          
+  62          void DigDisplay() interrupt 1{ 
+  63   1        P1 = disp[7];
+  64   1        switch(Num)  
+  65   1        {
+  66   2          case(7):
+  67   2            module3_LSA=0; module3_LSB=0; module3_LSC=0; break;
+  68   2          case(6):
+  69   2            module3_LSA=1; module3_LSB=0; module3_LSC=0; break;
+  70   2          case(5):
+  71   2            module3_LSA=0; module3_LSB=1; module3_LSC=0; break;
+  72   2          case(4):
+  73   2            module3_LSA=1; module3_LSB=1; module3_LSC=0; break;
+  74   2          case(3):
+  75   2            module3_LSA=0; module3_LSB=0; module3_LSC=1; break;
+  76   2          case(2):
+  77   2            module3_LSA=1; module3_LSB=0; module3_LSC=1; break;
+  78   2          case(1):
+  79   2            module3_LSA=0; module3_LSB=1; module3_LSC=1; break;
+  80   2          case(0):
+  81   2            module3_LSA=1; module3_LSB=1; module3_LSC=1; break; 
+  82   2        }
+  83   1        DIG = disp[Num]; 
+  84   1        Num++;
+  85   1        if(Num>7)
+  86   1          Num=0;
+  87   1      }
+  88          
+  89          void main(void){
+  90   1        unsigned int num0=0,num1=0,n;
+  91   1        Timer0Configuration();
+  92   1        while(1)
+  93   1        {
+  94   2          if(module3_K1==0)   // ghi giá tri vào eeprom
+  95   2          {
+  96   3            Delay1ms();
+  97   3            if(module3_K1==0)
+  98   3              At24c02Write(2,num0);
+  99   3            while((n<200)&&(module3_K3==0))
+ 100   3            {
+ 101   4              n++;
+ 102   4              Delay1ms(); 
+ 103   4            }     
+ 104   3            n=0;
+ 105   3            n=0;
+ 106   3          }
+ 107   2          
+ 108   2          if(module3_K2 == 0)   // doc giá tri tu eeprom
+ 109   2          {
+ 110   3            Delay1ms();
+ 111   3            if(module3_K2 == 0)
+ 112   3              num0=At24c02Read(2);
+ 113   3            while((n<200)&&(module3_K3 == 0))
+ 114   3            {
+ 115   4              n++;
+ 116   4              Delay1ms(); 
+ 117   4            }     
+C51 COMPILER V9.60.0.0   MAIN                                                              12/11/2023 09:45:42 PAGE 3   
 
- 118   1        ET0=1;//´ò¿ª¶¨Ê±Æ÷0ÖÐ¶ÏÔÊÐí
- 119   1        EA=1;//´ò¿ª×ÜÖÐ¶Ï
- 120   1        TR0=1;//´ò¿ª¶¨Ê±Æ÷    
- 121   1      }
- 122          /*******************************************************************************
- 123          * º¯ÊýÃû         : Delay1ms()
- 124          * º¯Êý¹¦ÄÜ       : ÑÓÊ±
- 125          * ÊäÈë           : ÎÞ
- 126          * Êä³ö           : ÎÞ
- 127          *******************************************************************************/
- 128          
- 129          void Delay1ms()   //Îó²î 0us
- 130          {
- 131   1          unsigned char a,b,c;
- 132   1          for(c=1;c>0;c--)
- 133   1              for(b=142;b>0;b--)
- 134   1                  for(a=2;a>0;a--);
- 135   1      }
- 136          /*******************************************************************************
- 137          * º¯ÊýÃû         : void At24c02Write(unsigned char addr,unsigned char dat)
- 138          * º¯Êý¹¦ÄÜ       : Íù24c02µÄÒ»¸öµØÖ·Ð´ÈëÒ»¸öÊý¾Ý
- 139          * ÊäÈë           : ÎÞ
- 140          * Êä³ö           : ÎÞ
- 141          *******************************************************************************/
- 142          
- 143          void At24c02Write(unsigned char addr,unsigned char dat)
- 144          {
- 145   1        I2cStart();
- 146   1        I2cSendByte(0xa2);//·// ten eeprom
- 147   1        I2cSendByte(addr);//·dia chi trong eeprom
- 148   1        I2cSendByte(dat); //·data eeprom
- 149   1        I2cStop();
- 150   1      }
- 151          /*******************************************************************************
- 152          * º¯ÊýÃû         : unsigned char At24c02Read(unsigned char addr)
- 153          * º¯Êý¹¦ÄÜ       : ¶ÁÈ¡24c02µÄÒ»¸öµØÖ·µÄÒ»¸öÊý¾Ý
- 154          * ÊäÈë           : ÎÞ
- 155          * Êä³ö           : ÎÞ
- 156          *******************************************************************************/
+ 118   3            n=0;
+ 119   3          }     
+ 120   2          if(module3_K3 == 0)
+ 121   2          {
+ 122   3            Delay1ms();
+ 123   3            if(module3_K3 == 0)
+ 124   3              num0++;
+ 125   3            while((n<200)&&(module3_K3 == 0))
+ 126   3            {
+ 127   4              n++;
+ 128   4              Delay1ms(); 
+ 129   4            }     
+ 130   3            n=0;
+ 131   3            if(num0==256)
+ 132   3              num0=0;
+ 133   3          }
+ 134   2            
+ 135   2          if(module3_K4==0)
+ 136   2          {
+ 137   3            Delay1ms();
+ 138   3            if(module3_K4==0)
+ 139   3              num0=0;
+ 140   3            while((n<200)&&(module3_K3==0))
+ 141   3            {
+ 142   4              n++;
+ 143   4              Delay1ms(); 
+ 144   4            }     
+ 145   3            n=0;
+ 146   3          }     
+ 147   2          disp[0]=DIG_CODE[num1/1000];//Ç§Î»
+ 148   2          disp[1]=DIG_CODE[num1%1000/100];//°ÙÎ»
+ 149   2          disp[2]=DIG_CODE[num1%1000%100/10];//Ê®Î»
+ 150   2          disp[3]=DIG_CODE[num1%1000%100%10];//¸öÎ»
+ 151   2          disp[4]=DIG_CODE[num0/1000];//Ç§Î»
+ 152   2          disp[5]=DIG_CODE[num0%1000/100];//°ÙÎ»
+ 153   2          disp[6]=DIG_CODE[num0%1000%100/10];//¸öÎ»
+ 154   2          disp[7]=DIG_CODE[num0%1000%100%10]; 
+ 155   2        }
+ 156   1      }                  
  157          
- 158          unsigned char At24c02Read(unsigned char addr)
- 159          {
- 160   1        unsigned char num;
- 161   1        I2cStart();
- 162   1        I2cSendByte(0xa2); //·¢ËÍÐ´Æ÷¼þµØÖ·
- 163   1        I2cSendByte(addr); //·¢ËÍÒª¶ÁÈ¡µÄµØÖ·
- 164   1        I2cStart();
- 165   1        I2cSendByte(0xa3); //·¢ËÍ¶ÁÆ÷¼þµØÖ·
- 166   1        num=I2cReadByte(); //¶ÁÈ¡Êý¾Ý
- 167   1        I2cStop();
- 168   1        return num; 
- 169   1      }
- 170          /*******************************************************************************
- 171          * º¯ÊýÃû         : DigDisplay() interrupt 1
- 172          * º¯Êý¹¦ÄÜ       : ÖÐ¶ÏÊýÂë¹ÜÏÔÊ¾
- 173          * ÊäÈë           : ÎÞ
- 174          * Êä³ö           : ÎÞ
- 175          *******************************************************************************/
- 176          
- 177          void DigDisplay() interrupt 1
- 178          {
- 179   1      //¶¨Ê±Æ÷ÔÚ¹¤×÷·½Ê½¶þ»á×Ô¶¯ÖØ×°³õ£¬ËùÒÔ²»ÓÃÔÚ¸³Öµ¡£
-C51 COMPILER V9.60.0.0   MAIN                                                              12/07/2023 18:36:17 PAGE 4   
-
- 180   1      //  TH0=0X9c;//¸ø¶¨Ê±Æ÷¸³³õÖµ£¬¶¨Ê±1ms
- 181   1      //  TL0=0X00;   
- 182   1        // DIG=0; //ÏûÒþ
- 183   1        P1 = disp[7];
- 184   1        switch(Num)  //Î»Ñ¡£¬Ñ¡ÔñµãÁÁµÄÊýÂë¹Ü£¬
- 185   1        {
- 186   2          case(7):
- 187   2            LSA=0;LSB=0;LSC=0; break;
- 188   2          case(6):
- 189   2            LSA=1;LSB=0;LSC=0; break;
- 190   2          case(5):
- 191   2            LSA=0;LSB=1;LSC=0; break;
- 192   2          case(4):
- 193   2            LSA=1;LSB=1;LSC=0; break;
- 194   2          case(3):
- 195   2            LSA=0;LSB=0;LSC=1; break;
- 196   2          case(2):
- 197   2            LSA=1;LSB=0;LSC=1; break;
- 198   2          case(1):
- 199   2            LSA=0;LSB=1;LSC=1; break;
- 200   2          case(0):
- 201   2            LSA=1;LSB=1;LSC=1; break; 
- 202   2        }
- 203   1        DIG=disp[Num]; //¶ÎÑ¡£¬Ñ¡ÔñÏÔÊ¾µÄÊý×Ö¡£
- 204   1        Num++;
- 205   1        if(Num>7)
- 206   1          Num=0;
- 207   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    769    ----
+   CODE SIZE        =    745    ----
    CONSTANT SIZE    =     10    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     17      10
+   DATA SIZE        =      9      10
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
