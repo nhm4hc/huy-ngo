@@ -407,16 +407,6 @@
               <FilePath>.\LCD1602.h</FilePath>
             </File>
             <File>
-              <FileName>module_1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\module_1.c</FilePath>
-            </File>
-            <File>
-              <FileName>module_1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\module_1.h</FilePath>
-            </File>
-            <File>
               <FileName>module_2.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\module_2.c</FilePath>
@@ -500,6 +490,16 @@
               <FileName>module_15.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\module_15.h</FilePath>
+            </File>
+            <File>
+              <FileName>interruptPublish.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\interruptPublish.c</FilePath>
+            </File>
+            <File>
+              <FileName>interruptPublish.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\interruptPublish.h</FilePath>
             </File>
           </Files>
         </Group>

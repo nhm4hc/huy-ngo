@@ -1,22 +1,21 @@
 #include "module_2.h"
+#include "interruptPublish.h"
+
+unsigned int module2_count = 0;
 
 void module2_delayMS(unsigned int t){
+	SET_BIT(c_interrupt,MODULE_0);
 	TMOD = 0x01;
 	TH0 = 0xFC;
 	TL0 = 0x18;
 	ET0 = 1;
 	EA = 1;
-	count =0;
+	module2_count =0;
 	TR0 =1;
-	while(count < t);
+	while(module2_count < t);
+	led = 0;
 	ET0 = 0;
 	TR0 =0;
-}
-
-void ISR_timer0(void) interrupt 1{
-	TH0 = 0xFC;
-	TL0 = 0x18;
-	count++;
 }
 
 void smg_display1(void){
@@ -35,7 +34,7 @@ void smg_display1(void){
 			case 7: module2_LSC=0; module2_LSB=0; module2_LSA=0; break;
 		}
 		SMG_A_DP_PORT = gsmg_code[i];
-		module2_delayMS(500);
+		module2_delayMS(1000);
 		SMG_A_DP_PORT=0x00;
 	}
 }
@@ -56,12 +55,13 @@ void smg_display2(void){
 			case 15: module2_LSC=0; module2_LSB=0; module2_LSA=0; break;;
 		}
 		SMG_A_DP_PORT = gsmg_code[i];
-		module2_delayMS(500);
+		module2_delayMS(1000);
 		SMG_A_DP_PORT=0x00;
 	}
 }
 
 void module_2(void){
+	
 	if(module2_K1 == 0)
 	{
    	smg_display1();
