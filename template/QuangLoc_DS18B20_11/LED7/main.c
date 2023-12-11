@@ -14,21 +14,12 @@ unsigned char Num = 0;
 unsigned int disp[8] = {0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f};
 
 // Khai bao cac ham
-void LcdDisplay(int);
-void Timer0Configuration();
-
-void main()
-{
-    Timer0Configuration();
-    while(1)
-    {
-        LcdDisplay(Ds18b20ReadTemp());
-    }
-}
+void LcdDisplay(int temp);
+void Timer0Configuration(void);
+void DigDisplay(void);
 
 // Ham hien thi nhiet do len LCD
-void LcdDisplay(int temp)
-{
+void LcdDisplay(int temp){
     unsigned char datas[] = {0, 0, 0, 0, 0}; // Mang luu tru gia tri nhiet do
     float tp;
     if(temp < 0) // Neu nhiet do la so am
@@ -57,8 +48,7 @@ void LcdDisplay(int temp)
 }
 
 // Cau hinh Timer 0
-void Timer0Configuration()
-{
+void Timer0Configuration(void){
     TMOD = 0X02; // Chon che do Timer, che do 2
 
     TH0 = 0X9C;  // Gia tri khoi tao cho Timer, 100us
@@ -69,10 +59,9 @@ void Timer0Configuration()
 }
 
 // Ham ngat Timer 0 de hien thi tren man hinh LED 7 doan
-void DigDisplay() interrupt 1
-{
+void DigDisplay(void) interrupt 1{
     DIG = 0; // Tat hien thi
-    switch(Num)  // Chon digit de hien thi
+    switch(Num)  
     {
         case(7):
             LSA = 0; LSB = 0; LSC = 0; break;
@@ -91,8 +80,17 @@ void DigDisplay() interrupt 1
         case(0):
             LSA = 1; LSB = 1; LSC = 1; break; 
     }
-    DIG = disp[Num]; // Hien thi so tren LED 7 doan
+    DIG = disp[Num]; 
     Num++;
     if(Num > 7)
         Num = 0;
+}
+
+void main()
+{
+    Timer0Configuration();
+    while(1)
+    {
+        LcdDisplay(Ds18b20ReadTemp());
+    }
 }

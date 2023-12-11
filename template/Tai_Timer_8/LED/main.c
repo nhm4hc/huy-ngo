@@ -1,9 +1,9 @@
 #include<reg51.h>	
 #include<intrins.h>
 
-#define GPIO_LED P2
+#define GPIO_LED_6 P2
 
-unsigned char Time;
+unsigned char module5_Time;
 
 void TimerConfiguration(void);
 void Timer0(void);
@@ -20,19 +20,19 @@ void TimerConfiguration(void){
 void Timer0(void) interrupt 1{
 	TH0 = 0x3C;	 
   TL0 = 0xB0;
-	Time++;
+	module5_Time++;
 }
 
 void main(void){
-	Time=0;
-	GPIO_LED=0XFE;
+	module5_Time = 0;
+	GPIO_LED_6 = 0XFE;
 	TimerConfiguration();
 	while(1)
 	{
-		if(Time==10)
+		if(module5_Time == 10)
 		{
-			GPIO_LED=_crol_(GPIO_LED,1);
-			Time=0;
+			GPIO_LED_6 =_crol_(GPIO_LED_6, 1);
+			module5_Time = 0;
 		}
 	}				
 }  

@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/11/2023  14:01:50  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/11/2023  18:57:38  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -28,14 +28,15 @@ LINK MAP OF MODULE:  beep (?C_STARTUP)
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
             CODE    0003H     0004H     UNIT         ?C_INITSEG
-            CODE    0007H     0003H     UNIT         ?PR?_DELAYMS?BEEP
+            CODE    0007H     0003H     UNIT         ?PR?_MODULE6_DELAYMS?BEEP
                     000AH     0001H                  *** GAP ***
             CODE    000BH     0003H     ABSOLUTE     
             CODE    000EH     00BFH     UNIT         ?CO?BEEP
             CODE    00CDH     008CH     UNIT         ?C_C51STARTUP
-            CODE    0159H     0056H     UNIT         ?PR?MAIN?BEEP
-            CODE    01AFH     0012H     UNIT         ?PR?_DELAY?BEEP
-            CODE    01C1H     0009H     UNIT         ?PR?INT0?BEEP
+            CODE    0159H     004AH     UNIT         ?PR?MAIN?BEEP
+            CODE    01A3H     0012H     UNIT         ?PR?_MODULE6_DELAY?BEEP
+            CODE    01B5H     0010H     UNIT         ?PR?INT0INIT?BEEP
+            CODE    01C5H     0009H     UNIT         ?PR?INT0?BEEP
 
 
 
@@ -50,18 +51,19 @@ SEGMENT
   +--> ?C_INITSEG
 
 ?PR?MAIN?BEEP
+  +--> ?PR?INT0INIT?BEEP
   +--> ?CO?BEEP
-  +--> ?PR?_DELAYMS?BEEP
-  +--> ?PR?_DELAY?BEEP
+  +--> ?PR?_MODULE6_DELAYMS?BEEP
+  +--> ?PR?_MODULE6_DELAY?BEEP
 
 
 
 SYMBOL TABLE OF MODULE:  beep (?C_STARTUP)
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  18:57:38  PAGE 2
+
+
 
   VALUE           TYPE          NAME
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  14:01:50  PAGE 2
-
-
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
@@ -104,9 +106,11 @@ SYMBOL TABLE OF MODULE:  beep (?C_STARTUP)
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
   D:00A8H         PUBLIC        IE
-  C:01AFH         PUBLIC        _delay
+  C:01B5H         PUBLIC        int0Init
+  C:0007H         PUBLIC        _module6_delayms
   D:00B8H         PUBLIC        IP
   C:0159H         PUBLIC        main
+  C:01A3H         PUBLIC        _module6_delay
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
@@ -115,67 +119,90 @@ SYMBOL TABLE OF MODULE:  beep (?C_STARTUP)
   D:008AH         PUBLIC        TL0
   B:0088H.4       PUBLIC        TR0
   D:00C8H         PUBLIC        T2CON
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  18:57:38  PAGE 3
+
+
   D:0008H         PUBLIC        n
-  C:0007H         PUBLIC        _delayms
   D:00D0H         PUBLIC        PSW
-  C:01C1H         PUBLIC        int0
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  14:01:50  PAGE 3
-
-
+  C:01C5H         PUBLIC        int0
   B:00A0H.5       PUBLIC        Beep
+  -------         PROC          INT0INIT
+  C:01B5H         LINE#         65
+  C:01B5H         LINE#         66
+  C:01B8H         LINE#         67
+  C:01BBH         LINE#         68
+  C:01BEH         LINE#         69
+  C:01C1H         LINE#         70
+  C:01C4H         LINE#         71
+  -------         ENDPROC       INT0INIT
   -------         PROC          INT0
-  C:01C1H         LINE#         61
-  C:01C1H         LINE#         62
-  C:01C4H         LINE#         63
-  C:01C7H         LINE#         64
-  C:01C9H         LINE#         65
+  C:01C5H         LINE#         73
+  C:01C5H         LINE#         74
+  C:01C8H         LINE#         75
+  C:01CBH         LINE#         76
+  C:01CDH         LINE#         77
   -------         ENDPROC       INT0
-  -------         PROC          _DELAY
+  -------         PROC          _MODULE6_DELAY
   D:0007H         SYMBOL        m
   -------         DO            
   D:0006H         SYMBOL        i
   -------         ENDDO         
-  C:01AFH         LINE#         67
-  C:01AFH         LINE#         68
-  C:01AFH         LINE#         69
-  C:01B7H         LINE#         70
-  C:01C0H         LINE#         71
-  -------         ENDPROC       _DELAY
-  -------         PROC          _DELAYMS
+  C:01A3H         LINE#         79
+  C:01A3H         LINE#         80
+  C:01ABH         LINE#         81
+  C:01B4H         LINE#         82
+  -------         ENDPROC       _MODULE6_DELAY
+  -------         PROC          _MODULE6_DELAYMS
   D:0007H         SYMBOL        a
-  C:0007H         LINE#         73
-  C:0007H         LINE#         74
-  C:0007H         LINE#         75
-  C:0009H         LINE#         76
-  -------         ENDPROC       _DELAYMS
+  C:0007H         LINE#         84
+  C:0007H         LINE#         85
+  C:0009H         LINE#         86
+  -------         ENDPROC       _MODULE6_DELAYMS
   -------         PROC          MAIN
   -------         DO            
   D:0006H         SYMBOL        p
   D:0004H         SYMBOL        m
   D:0005H         SYMBOL        i
-  C:0161H         SYMBOL        play
-  C:016AH         SYMBOL        a
+  C:0162H         SYMBOL        play
+  C:015EH         SYMBOL        a
   -------         ENDDO         
-  C:0159H         LINE#         78
-  C:0159H         LINE#         79
-  C:0159H         LINE#         80
-  C:015BH         LINE#         81
-  C:015EH         LINE#         82
-  C:0161H         LINE#         83
-  C:0167H         LINE#         84
-  C:016AH         LINE#         85
-  C:016AH         LINE#         86
-  C:016AH         LINE#         87
-  C:016AH         LINE#         88
-  C:0170H         LINE#         89
-  C:017DH         LINE#         90
-  C:018CH         LINE#         91
-  C:019CH         LINE#         92
-  C:019EH         LINE#         93
-  C:01ABH         LINE#         94
-  C:01ADH         LINE#         95
+  C:0159H         LINE#         88
+  C:0159H         LINE#         90
+  C:015BH         LINE#         91
+  C:015EH         LINE#         92
+  C:015EH         LINE#         93
+  C:015EH         LINE#         94
+  C:015EH         LINE#         95
+  C:0164H         LINE#         96
+  C:0169H         LINE#         97
+  C:0169H         LINE#         98
+  C:016AH         LINE#         99
+  C:016FH         LINE#         100
+  C:0171H         LINE#         101
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  18:57:38  PAGE 4
+
+
+  C:0171H         LINE#         102
+  C:0176H         LINE#         103
+  C:0176H         LINE#         104
+  C:0177H         LINE#         105
+  C:017CH         LINE#         106
+  C:017EH         LINE#         107
+  C:0180H         LINE#         108
+  C:0180H         LINE#         110
+  C:0180H         LINE#         111
+  C:0189H         LINE#         112
+  C:0190H         LINE#         113
+  C:0190H         LINE#         114
+  C:0192H         LINE#         115
+  C:0196H         LINE#         116
+  C:0196H         LINE#         117
+  C:0198H         LINE#         118
+  C:019DH         LINE#         119
+  C:019FH         LINE#         120
+  C:01A1H         LINE#         121
   -------         ENDPROC       MAIN
   -------         ENDMOD        BEEP
 
-Program Size: data=10.0 xdata=0 code=457
+Program Size: data=10.0 xdata=0 code=461
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

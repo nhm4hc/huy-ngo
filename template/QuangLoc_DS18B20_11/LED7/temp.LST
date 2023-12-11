@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   TEMP                                                              12/11/2023 14:37:04 PAGE 1   
+C51 COMPILER V9.60.0.0   TEMP                                                              12/11/2023 19:19:27 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TEMP
@@ -62,7 +62,7 @@ line level    source
   53   1          unsigned int i, j;
   54   1          EA = 0;  // T?t ng?t toàn c?c
   55   1          for(j = 8; j > 0; j--)
-C51 COMPILER V9.60.0.0   TEMP                                                              12/11/2023 14:37:04 PAGE 2   
+C51 COMPILER V9.60.0.0   TEMP                                                              12/11/2023 19:19:27 PAGE 2   
 
   56   1          {
   57   2              DSPORT = 0;  // Kéo chân DSPORT xu?ng th?p 1us

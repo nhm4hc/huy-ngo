@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   BEEP                                                              12/11/2023 14:01:50 PAGE 1   
+C51 COMPILER V9.60.0.0   BEEP                                                              12/11/2023 18:57:38 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BEEP
@@ -7,13 +7,13 @@ COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE beep.c OPTIMIZE(8,SPEED) BROWSE 
 
 line level    source
 
-   1          
-   2          #include <REG52.H>    
-   3          #include <INTRINS.H>    
-   4          
-   5          sbit Beep =  P2^5 ; 
-   6             
-   7          unsigned char n=0;
+   1          #include <REG52.H>    
+   2          #include <INTRINS.H>    
+   3          
+   4          sbit Beep =  P2^5 ; 
+   5             
+   6          unsigned char n=0;
+   7          
    8          // noi dung ban nhac
    9          unsigned char code music_tab[] ={   
   10          0x18, 0x30, 0x1C , 0x10,     
@@ -62,53 +62,81 @@ line level    source
   53          0x18, 0x40, 0x1C , 0x20,   
   54          0x20, 0x20, 0x26 , 0x40,   
   55          0x13, 0x60, 0x18 , 0x20,   
-C51 COMPILER V9.60.0.0   BEEP                                                              12/11/2023 14:01:50 PAGE 2   
+C51 COMPILER V9.60.0.0   BEEP                                                              12/11/2023 18:57:38 PAGE 2   
 
   56          0x15, 0x40, 0x13 , 0x40,   
   57          0x18, 0x80, 0x00  
-  58          
-  59          };   
-  60             
-  61          void int0()  interrupt 1      
-  62          {  TH0=0xd8;   
-  63   1         TL0=0xef;   
-  64   1         n--;   
-  65   1      }   
-  66             
-  67          void delay (unsigned char m)    
-  68          {   
-  69   1       unsigned i=3*m;   
-  70   1       while(--i);   
-  71   1      }   
-  72             
-  73          void delayms(unsigned char a)      
-  74          {   
-  75   1        while(--a);                   
-  76   1      }   
-  77             
-  78          void main()   
-  79          { unsigned char p,m;      
-  80   1        unsigned char i=0;   
-  81   1        TMOD&=0x0f;   
-  82   1        TMOD|=0x01;   
-  83   1        TH0=0xd8;TL0=0xef;   
-  84   1        IE=0x82;   
-  85   1      play:   
-  86   1         while(1)   
-  87   1          {   
-  88   2          a: p=music_tab[i];   
-  89   2             if(p==0x00)       { i=0, delayms(1000); goto play;}        
-  90   2             else if(p==0xff)  { i=i+1;delayms(100),TR0=0; goto a;}      
-  91   2                  else         {m=music_tab[i++], n=music_tab[i++];}     
-  92   2                   TR0=1;                                                 
-  93   2                 while(n!=0) Beep=~Beep,delay(m);                            
-  94   2             TR0=0;                                                 
-  95   2          }   
-  96   1      }  
+  58          };   
+  59          
+  60          void int0Init(void);
+  61          void int0(void);
+  62          void module6_delay(unsigned char m);
+  63          void module6_delayms(unsigned char a);
+  64             
+  65          void int0Init(void){
+  66   1        TMOD&=0x0f;   
+  67   1        TMOD|=0x01;   
+  68   1        TH0=0xd8;
+  69   1        TL0=0xef;   
+  70   1        IE=0x82;
+  71   1      }
+  72          
+  73          void int0(void)  interrupt 1 {  
+  74   1        TH0=0xd8;   
+  75   1        TL0=0xef;   
+  76   1        n--;   
+  77   1      }   
+  78             
+  79          void module6_delay(unsigned char m){   
+  80   1       unsigned i=3*m;   
+  81   1       while(--i);   
+  82   1      }   
+  83             
+  84          void module6_delayms(unsigned char a){   
+  85   1        while(--a);                   
+  86   1      }   
+  87             
+  88          void main(void){ 
+  89   1        unsigned char p,m;      
+  90   1        unsigned char i=0;   
+  91   1        int0Init();
+  92   1        play:   
+  93   1         while(1)   
+  94   1         {   
+  95   2            a: p=music_tab[i];   
+  96   2            if(p==0x00)       
+  97   2            { 
+  98   3              i=0; 
+  99   3              module6_delayms(1000);
+ 100   3              goto play;
+ 101   3            }        
+ 102   2            else if(p==0xff)  
+ 103   2            {
+ 104   3              i=i+1;
+ 105   3              module6_delayms(100);
+ 106   3              TR0=0;
+ 107   3              goto a;
+ 108   3            }      
+ 109   2            else         
+ 110   2            {
+ 111   3              m=music_tab[i++]; 
+ 112   3              n=music_tab[i++];
+ 113   3            }     
+ 114   2            TR0=1;                                                 
+ 115   2            while(n!=0)
+ 116   2            {
+ 117   3              Beep=~Beep;
+C51 COMPILER V9.60.0.0   BEEP                                                              12/11/2023 18:57:38 PAGE 3   
+
+ 118   3              module6_delay(m);
+ 119   3            }                                   
+ 120   2            TR0=0;                                                 
+ 121   2         }   
+ 122   1      }  
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    116    ----
+   CODE SIZE        =    120    ----
    CONSTANT SIZE    =    191    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

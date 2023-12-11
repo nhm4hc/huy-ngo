@@ -1,10 +1,10 @@
-
 #include <REG52.H>    
 #include <INTRINS.H>    
 
 sbit Beep =  P2^5 ; 
    
 unsigned char n=0;
+
 // noi dung ban nhac
 unsigned char code music_tab[] ={   
 0x18, 0x30, 0x1C , 0x10,     
@@ -55,42 +55,68 @@ unsigned char code music_tab[] ={
 0x13, 0x60, 0x18 , 0x20,   
 0x15, 0x40, 0x13 , 0x40,   
 0x18, 0x80, 0x00  
-
 };   
+
+void int0Init(void);
+void int0(void);
+void module6_delay(unsigned char m);
+void module6_delayms(unsigned char a);
    
-void int0()  interrupt 1      
-{  TH0=0xd8;   
-   TL0=0xef;   
-   n--;   
+void int0Init(void){
+	TMOD&=0x0f;   
+  TMOD|=0x01;   
+  TH0=0xd8;
+	TL0=0xef;   
+  IE=0x82;
+}
+
+void int0(void)  interrupt 1 {  
+	TH0=0xd8;   
+  TL0=0xef;   
+  n--;   
 }   
    
-void delay (unsigned char m)    
-{   
+void module6_delay(unsigned char m){   
  unsigned i=3*m;   
  while(--i);   
 }   
    
-void delayms(unsigned char a)      
-{   
+void module6_delayms(unsigned char a){   
   while(--a);                   
 }   
    
-void main()   
-{ unsigned char p,m;      
+void main(void){ 
+	unsigned char p,m;      
   unsigned char i=0;   
-  TMOD&=0x0f;   
-  TMOD|=0x01;   
-  TH0=0xd8;TL0=0xef;   
-  IE=0x82;   
-play:   
+  int0Init();
+	play:   
    while(1)   
-    {   
-    a: p=music_tab[i];   
-       if(p==0x00)       { i=0, delayms(1000); goto play;}        
-       else if(p==0xff)  { i=i+1;delayms(100),TR0=0; goto a;}      
-            else         {m=music_tab[i++], n=music_tab[i++];}     
-             TR0=1;                                                 
-           while(n!=0) Beep=~Beep,delay(m);                            
-       TR0=0;                                                 
-    }   
+   {   
+			a: p=music_tab[i];   
+      if(p==0x00)       
+			{ 
+				i=0; 
+				module6_delayms(1000);
+				goto play;
+			}        
+      else if(p==0xff)  
+			{
+				i=i+1;
+				module6_delayms(100);
+				TR0=0;
+				goto a;
+			}      
+      else         
+			{
+				m=music_tab[i++]; 
+				n=music_tab[i++];
+			}     
+      TR0=1;                                                 
+      while(n!=0)
+			{
+				Beep=~Beep;
+				module6_delay(m);
+			}				                            
+      TR0=0;                                                 
+   }   
 }  
