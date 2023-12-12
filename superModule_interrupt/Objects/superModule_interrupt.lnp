@@ -1,0 +1,10 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\displayLCD.obj",
+".\Objects\LCD1602.obj",
+".\Objects\interruptPublish.obj",
+".\Objects\module_1.obj",
+".\Objects\module_2.obj",
+".\Objects\module_5.obj" 
+TO ".\Objects\superModule_interrupt" 
+PRINT(".\Listings\superModule_interrupt.m51") RAMSIZE(256) 

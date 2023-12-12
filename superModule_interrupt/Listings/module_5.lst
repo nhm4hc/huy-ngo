@@ -1,0 +1,52 @@
+C51 COMPILER V9.60.0.0   MODULE_5                                                          12/12/2023 11:25:35 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_5
+OBJECT MODULE PLACED IN .\Objects\module_5.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE module_5.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -module_5.lst) TABS(2) OBJECT(.\Objects\module_5.obj)
+
+line level    source
+
+   1          #include "module_5.h"
+   2          #include "interruptPublish.h"
+   3          
+   4          unsigned char module5_Time = 0;
+   5          
+   6          void TimerConfiguration(void){
+   7   1        SET_BIT(c_interrupt,MODULE_4);
+   8   1        TMOD = 0x01; 
+   9   1        TH0 = 0x3C;  
+  10   1        TL0 = 0xB0; 
+  11   1        EA = 1;      
+  12   1        ET0 = 1;     
+  13   1        TR0 = 1;     
+  14   1      }
+  15          
+  16          void module_5(void){
+  17   1        GPIO_LED_6 = 0XFE;
+  18   1        TimerConfiguration();
+  19   1        while(1)
+  20   1        {
+  21   2          if(module5_Time == 10)
+  22   2          {
+  23   3            GPIO_LED_6 =_crol_(GPIO_LED_6, 1);
+  24   3            module5_Time = 0;
+  25   3          }
+  26   2        }
+  27   1      }
+  28            
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     49    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

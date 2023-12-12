@@ -1,0 +1,319 @@
+C51 COMPILER V9.60.0.0   DISPLAYLCD                                                        12/12/2023 11:25:35 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DISPLAYLCD
+OBJECT MODULE PLACED IN .\Objects\displayLCD.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE displayLCD.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\displayLCD.lst) TABS(2) OBJECT(.\Objects\displayLCD.obj)
+
+line level    source
+
+   1          #include "displayLCD.h"
+   2          #include "LCD1602.h"
+   3          #include "module_1.h"
+   4          #include "module_2.h"
+   5          //#include "module_3.h"
+   6          //#include "module_4.h"
+   7          #include "module_5.h"
+   8          //#include "module_6.h"
+   9          #include "interruptPublish.h"
+  10          
+  11          void IrInit(void){
+  12   1        checkRun = 0;
+  13   1        module = 0;
+  14   1        IT0 = 1;
+  15   1        EX0 = 1;
+  16   1        EA = 1; 
+  17   1        IRIN = 1;
+  18   1      }
+  19          
+  20          void DelayMs(unsigned int x){
+  21   1        unsigned char i;
+  22   1        while(x--)
+  23   1        {
+  24   2          for (i = 0; i<13; i++){}
+  25   2        }
+  26   1      }
+  27          
+  28          void ReadIr(void) interrupt 0 {
+  29   1        unsigned char j,k;
+  30   1        unsigned int err;
+  31   1        Time=0;          
+  32   1        DelayMs(70); //Goi ham delay de tao do tre 70ms
+  33   1        if(IRIN==1) //Kiem tra xem tin hieu hong ngoai co dang nhan duoc khong  
+  34   1        { 
+  35   2          err=1000; //Dat 1 gia tri timeout 
+  36   2          while((IRIN==0)&&(err>0)) //wait den khi TRIN len muc 1 hoac timeout
+  37   2          {     
+  38   3            DelayMs(1);
+  39   3            err--;
+  40   3          } 
+  41   2          if(IRIN==1) //Neu tin hieu len muc 1    
+  42   2          {
+  43   3            err=500;
+  44   3            while((IRIN==1)&&(err>0))// Wait cho den khi TRIN xuong muc 0 hoac timeout     
+  45   3            {
+  46   4              DelayMs(1);
+  47   4              err--;
+  48   4            }
+  49   3            for(k=0;k<4;k++) //Nhan 1 byte du lieu
+  50   3            {       
+  51   4              for(j=0;j<8;j++) //Nhan 8 bitt du lieu  
+  52   4              {
+  53   5                err=60;   
+  54   5                while((IRIN==0)&&(err>0)) // Wait cho den khi TRIN xuong muc 1 hoac timeout
+C51 COMPILER V9.60.0.0   DISPLAYLCD                                                        12/12/2023 11:25:35 PAGE 2   
+
+  55   5                {
+  56   6                  DelayMs(1);
+  57   6                  err--;
+  58   6                }
+  59   5                err=500;
+  60   5                while((IRIN==1)&&(err>0)) // Wait cho den khi TRIN xuong muc 0 hoac timeout 
+  61   5                {
+  62   6                  DelayMs(1);
+  63   6                  Time++;
+  64   6                  err--;
+  65   6                  if(Time>30) //Neu thoi gian TRIN o muc 1 qua 30ms
+  66   6                  {
+  67   7                    EX0=1; //Cho ph?p ngat ngoai vi
+  68   7                    return; //Thoat khoi ham ngat
+  69   7                  }
+  70   6                }
+  71   5                IrValue[k]>>=1; //bitt 0 se duoc day vao bitt cao nhat cua IrValue[k] 
+  72   5                if(Time>=8) //Neu thoi gian TRIN muc cao lon hon 8ms    
+  73   5                {
+  74   6                  IrValue[k]|=0x80; //bitt 1 se duoc day vao bitt cao nhat cua IrValue[k] 
+  75   6                }
+  76   5                Time=0; // set time ve 0              
+  77   5              }
+  78   4            }
+  79   3          }
+  80   2          if(IrValue[2]!=~IrValue[3]) //Kiem tra tinh nhat quan cua du lieu
+  81   2          {
+  82   3            return;
+  83   3          }
+  84   2        }     
+  85   1      }
+  86          
+  87          void hienThiChuc(int x){
+  88   1        LcdWriteCom(0x80+0x09);
+  89   1        LcdWriteData(x+0x30); 
+  90   1      }
+  91          
+  92          void hienThiDonVi(int x){
+  93   1        LcdWriteCom(0x80+0x0a);
+  94   1        LcdWriteData(x+0x30); 
+  95   1      }
+  96            
+  97          void reset(void){
+  98   1        int i;
+  99   1        checkRun = 0;
+ 100   1        IrValue[2] = 0;
+ 101   1        module = 0;
+ 102   1        hienThiDonVi(0x6B);
+ 103   1        hienThiChuc(0x6B);  
+ 104   1        LcdWriteCom(0x80+0x40);
+ 105   1        for(i=0;i<9;i++)
+ 106   1        {
+ 107   2          LcdWriteData(CDIS2[i]); 
+ 108   2        }
+ 109   1      }
+ 110          
+ 111          void xuLi(int x){
+ 112   1        if(checkRun==0)
+ 113   1        {
+ 114   2          module = x*10 + module;
+ 115   2          hienThiChuc(x);
+ 116   2          checkRun = 1;
+C51 COMPILER V9.60.0.0   DISPLAYLCD                                                        12/12/2023 11:25:35 PAGE 3   
+
+ 117   2          IrValue[2] = 0;
+ 118   2        }
+ 119   1        else if(checkRun==1)
+ 120   1        {
+ 121   2          module = x + module;
+ 122   2          hienThiDonVi(x);
+ 123   2          checkRun =3;
+ 124   2          IrValue[2] = 0;
+ 125   2        }
+ 126   1      }
+ 127          
+ 128          void runModule(int x){
+ 129   1        switch (x) 
+ 130   1        {
+ 131   2          case 1:
+ 132   2              module_1();
+ 133   2              break;
+ 134   2          case 2:
+ 135   2              module_2();
+ 136   2              break;
+ 137   2          case 3:
+ 138   2              //module_3();
+ 139   2              break;
+ 140   2          case 4:
+ 141   2              //module_4();
+ 142   2              break;
+ 143   2          case 5:
+ 144   2              module_5();
+ 145   2              break;
+ 146   2          case 6:
+ 147   2              //module_6();
+ 148   2              break;
+ 149   2          case 7:
+ 150   2              //LCD12864_DrowPic(&ars);
+ 151   2              //module 7 in here
+ 152   2              break;
+ 153   2          case 8:
+ 154   2              //module_8();
+ 155   2              break;
+ 156   2          case 9:
+ 157   2              //module_9();
+ 158   2              break;
+ 159   2          case 10:
+ 160   2              // module 10 in here
+ 161   2              // Using LCD16x2 for displaying, so dont call again
+ 162   2              break;
+ 163   2          case 11:
+ 164   2              //module_11();
+ 165   2              break;
+ 166   2          case 12:
+ 167   2              //module_12();
+ 168   2              break;
+ 169   2          case 13:
+ 170   2              // empty
+ 171   2              break;
+ 172   2          case 14:
+ 173   2              // empty
+ 174   2              break;
+ 175   2          case 15:
+ 176   2              //module_15();
+ 177   2              break;
+ 178   2          default:
+C51 COMPILER V9.60.0.0   DISPLAYLCD                                                        12/12/2023 11:25:35 PAGE 4   
+
+ 179   2              reset();
+ 180   2              break;
+ 181   2        }
+ 182   1      }
+ 183          
+ 184          void disableInterrupt(void){
+ 185   1        ET1 = 0;
+ 186   1        ET0 = 0;
+ 187   1        c_interrupt = 0;
+ 188   1      }
+ 189          
+ 190          void displayLCD(void){
+ 191   1        unsigned char i;
+ 192   1        LcdWriteCom(0x80); 
+ 193   1        for(i=0;i<9;i++)
+ 194   1        {
+ 195   2          LcdWriteData(CDIS1[i]); 
+ 196   2        }
+ 197   1        LcdWriteCom(0x80+0x40);
+ 198   1        for(i=0;i<9;i++)
+ 199   1        {
+ 200   2          LcdWriteData(CDIS2[i]); 
+ 201   2        }
+ 202   1      }
+ 203          
+ 204          void signalRecieved(void){
+ 205   1        unsigned char i;
+ 206   1        IrValue[4]=IrValue[2]>>4;
+ 207   1        IrValue[5]=IrValue[2]&0x0f; 
+ 208   1        if(IrValue[4]==0x00 && IrValue[5]==0x0D)
+ 209   1        {     //0   0D
+ 210   2          nutBam = 0;
+ 211   2          xuLi(nutBam);
+ 212   2        }
+ 213   1        if(IrValue[4]==0x00 && IrValue[5]==0x0C)
+ 214   1        { //1   0C  
+ 215   2          nutBam = 1;
+ 216   2          xuLi(nutBam);
+ 217   2        }
+ 218   1        if(IrValue[4]==0x01 && IrValue[5]==0x08)
+ 219   1        {   //2   18
+ 220   2          nutBam = 2;
+ 221   2          xuLi(nutBam);
+ 222   2        }
+ 223   1        if(IrValue[4]==0x05 && IrValue[5]==0x0E)
+ 224   1        {   //3   5E
+ 225   2          nutBam = 3;
+ 226   2          xuLi(nutBam);
+ 227   2        }
+ 228   1        if(IrValue[4]==0x00 && IrValue[5]==0x08)
+ 229   1        {     //4   08
+ 230   2          nutBam = 4;
+ 231   2          xuLi(nutBam);
+ 232   2        }
+ 233   1        if(IrValue[4]==0x01 && IrValue[5]==0x0C)
+ 234   1        { //5   1C  
+ 235   2          nutBam = 5;
+ 236   2          xuLi(nutBam);
+ 237   2        }
+ 238   1        if(IrValue[4]==0x05 && IrValue[5]==0x0A)
+ 239   1        {   //6   5A
+ 240   2          nutBam = 6;
+C51 COMPILER V9.60.0.0   DISPLAYLCD                                                        12/12/2023 11:25:35 PAGE 5   
+
+ 241   2          xuLi(nutBam);
+ 242   2        }
+ 243   1        if(IrValue[4]==0x04 && IrValue[5]==0x02)
+ 244   1        {   //7   42
+ 245   2          nutBam = 7;
+ 246   2          xuLi(nutBam);
+ 247   2        }
+ 248   1        if(IrValue[4]==0x05 && IrValue[5]==0x02)
+ 249   1        {     //8   52
+ 250   2          nutBam = 8;
+ 251   2          xuLi(nutBam);
+ 252   2        }
+ 253   1        if(IrValue[4]==0x04 && IrValue[5]==0x0A)
+ 254   1        { //9   4A
+ 255   2          nutBam = 9;
+ 256   2          xuLi(nutBam);
+ 257   2        }
+ 258   1        
+ 259   1        if(IrValue[4]==0x04 && IrValue[5]==0x04)
+ 260   1        {   //mode    44H
+ 261   2          if(module < 20)
+ 262   2          {
+ 263   3            runModule(module);
+ 264   3          }
+ 265   2          else
+ 266   2          {
+ 267   3            LcdWriteCom(0x80+0x40);
+ 268   3            for(i=0;i<9;i++)
+ 269   3            {
+ 270   4              LcdWriteData(CDIS4[i]); 
+ 271   4            }
+ 272   3            DelayMs(7000);
+ 273   3          }
+ 274   2          //reset();
+ 275   2        }
+ 276   1        if(IrValue[4]==0x04 && IrValue[5]==0x06)
+ 277   1        {   //stop    46H
+ 278   2          IrValue[2] = 0;
+ 279   2          disableInterrupt();
+ 280   2        }
+ 281   1        
+ 282   1        if(IrValue[4]==0x04 && IrValue[5]==0x05)
+ 283   1        {   //nguon   45H
+ 284   2          reset();
+ 285   2        }
+ 286   1      }
+ 287          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    930    ----
+   CONSTANT SIZE    =     36    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     30      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

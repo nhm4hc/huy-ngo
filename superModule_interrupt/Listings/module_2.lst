@@ -1,0 +1,98 @@
+C51 COMPILER V9.60.0.0   MODULE_2                                                          12/12/2023 11:25:35 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_2
+OBJECT MODULE PLACED IN .\Objects\module_2.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE module_2.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -module_2.lst) TABS(2) OBJECT(.\Objects\module_2.obj)
+
+line level    source
+
+   1          #include "module_2.h"
+   2          #include "interruptPublish.h"
+   3          
+   4          unsigned int count = 0;
+   5          
+   6          void module2_delayMS(unsigned int t){
+   7   1        SET_BIT(c_interrupt,MODULE_1);
+   8   1        TMOD = 0x01;
+   9   1        TH0 = 0xFC;
+  10   1        TL0 = 0x18;
+  11   1        ET0 = 1;
+  12   1        EA = 1;
+  13   1        count =0;
+  14   1        TR0 =1;
+  15   1        while(count < t);
+  16   1        ET0 = 0;
+  17   1        TR0 =0;
+  18   1      }
+  19          
+  20          void smg_display1(void){
+  21   1        u8 i;
+  22   1        for(i=0;i<8;i++)
+  23   1        {
+  24   2          switch(i)
+  25   2          {
+  26   3            case 0: module2_LSC=1; module2_LSB=1; module2_LSA=1; break;
+  27   3            case 1: module2_LSC=1; module2_LSB=1; module2_LSA=0; break;
+  28   3            case 2: module2_LSC=1; module2_LSB=0; module2_LSA=1; break;
+  29   3            case 3: module2_LSC=1; module2_LSB=0; module2_LSA=0; break;
+  30   3            case 4: module2_LSC=0; module2_LSB=1; module2_LSA=1; break;
+  31   3            case 5: module2_LSC=0; module2_LSB=1; module2_LSA=0; break;
+  32   3            case 6: module2_LSC=0; module2_LSB=0; module2_LSA=1; break;
+  33   3            case 7: module2_LSC=0; module2_LSB=0; module2_LSA=0; break;
+  34   3          }
+  35   2          SMG_A_DP_PORT = gsmg_code[i];
+  36   2          module2_delayMS(1000);
+  37   2          SMG_A_DP_PORT=0x00;
+  38   2        }
+  39   1      }
+  40          
+  41          void smg_display2(void){
+  42   1        u8 i;
+  43   1        for(i=8;i<18;i++)
+  44   1        {
+  45   2          switch(i)
+  46   2          {
+  47   3            case 8: module2_LSC=1; module2_LSB=1; module2_LSA=1; break;
+  48   3            case 9: module2_LSC=1; module2_LSB=1; module2_LSA=0; break;
+  49   3            case 10: module2_LSC=1; module2_LSB=0; module2_LSA=1; break;
+  50   3            case 11: module2_LSC=1; module2_LSB=0; module2_LSA=0; break;
+  51   3            case 12: module2_LSC=0; module2_LSB=1; module2_LSA=1; break;
+  52   3            case 13: module2_LSC=0; module2_LSB=1; module2_LSA=0; break;
+  53   3            case 14: module2_LSC=0; module2_LSB=0; module2_LSA=1; break;
+  54   3            case 15: module2_LSC=0; module2_LSB=0; module2_LSA=0; break;;
+C51 COMPILER V9.60.0.0   MODULE_2                                                          12/12/2023 11:25:35 PAGE 2   
+
+  55   3          }
+  56   2          SMG_A_DP_PORT = gsmg_code[i];
+  57   2          module2_delayMS(1000);
+  58   2          SMG_A_DP_PORT=0x00;
+  59   2        }
+  60   1      }
+  61          
+  62          void module_2(void){
+  63   1        
+  64   1        if(module2_K1 == 0)
+  65   1        {
+  66   2          smg_display1();
+  67   2        }
+  68   1        if(module2_K2 == 0)
+  69   1        {
+  70   2          smg_display2();
+  71   2        }
+  72   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    280    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     19    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

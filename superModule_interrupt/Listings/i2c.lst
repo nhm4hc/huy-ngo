@@ -1,0 +1,103 @@
+C51 COMPILER V9.60.0.0   I2C                                                               12/12/2023 10:11:28 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE I2C
+OBJECT MODULE PLACED IN .\Objects\i2c.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE i2c.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\i2c.l
+                    -st) TABS(2) OBJECT(.\Objects\i2c.obj)
+
+line level    source
+
+   1          #include"i2c.h"
+   2          
+   3          void i2c_Delay10us(void){
+   4   1        // deplay 10us
+   5   1        unsigned char a,b;
+   6   1        for(b=1;b>0;b--)
+   7   1          for(a=2;a>0;a--);
+   8   1      }
+   9          
+  10          void I2cStart(void){
+  11   1        // Hàm I2c Start 
+  12   1        i2c_SDA=1;
+  13   1        i2c_Delay10us();
+  14   1        i2c_SCL=1;
+  15   1        i2c_Delay10us();
+  16   1        i2c_SDA=0;
+  17   1        i2c_Delay10us();
+  18   1        i2c_SCL=0;      
+  19   1        i2c_Delay10us();    
+  20   1      }
+  21          
+  22          void I2cStop(void){
+  23   1        i2c_SDA=0;
+  24   1        i2c_Delay10us();
+  25   1        i2c_SCL=1;
+  26   1        i2c_Delay10us();
+  27   1        i2c_SDA=1;
+  28   1        i2c_Delay10us();    
+  29   1      }
+  30          
+  31          unsigned char I2cSendByte(unsigned char dat){
+  32   1        unsigned char a=0,b=0;  
+  33   1        for(a=0;a<8;a++)
+  34   1        {
+  35   2          i2c_SDA = dat>>7;  
+  36   2          dat = dat<<1;
+  37   2          i2c_Delay10us();
+  38   2          i2c_SCL = 1;
+  39   2          i2c_Delay10us();
+  40   2          i2c_SCL = 0;
+  41   2          i2c_Delay10us();
+  42   2        }
+  43   1        i2c_SDA = 1;
+  44   1        i2c_Delay10us();
+  45   1        i2c_SCL=1;
+  46   1        while(i2c_SDA)
+  47   1        {
+  48   2          b++;
+  49   2          if(b>200)  
+  50   2          {
+  51   3            i2c_SCL=0;
+  52   3            i2c_Delay10us();
+  53   3            return 0;
+  54   3          }
+C51 COMPILER V9.60.0.0   I2C                                                               12/12/2023 10:11:28 PAGE 2   
+
+  55   2        }
+  56   1        i2c_SCL=0;
+  57   1        i2c_Delay10us();
+  58   1        return 1;   
+  59   1      }
+  60          
+  61          unsigned char I2cReadByte(void)
+  62          {
+  63   1        unsigned char a=0,dat=0;
+  64   1        i2c_SDA=1;      
+  65   1        i2c_Delay10us();
+  66   1        for(a=0;a<8;a++)
+  67   1        {
+  68   2          i2c_SCL=1;
+  69   2          i2c_Delay10us();
+  70   2          dat<<=1;
+  71   2          dat|=i2c_SDA;
+  72   2          i2c_Delay10us();
+  73   2          i2c_SCL=0;
+  74   2          i2c_Delay10us();
+  75   2        }
+  76   1        return dat;   
+  77   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    186    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

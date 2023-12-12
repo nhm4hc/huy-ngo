@@ -3,7 +3,9 @@
 
 #define GPIO_LED_6 P2
 
-unsigned char module5_Time;
+extern unsigned char module5_Time;
+
+unsigned char module5_Time = 0;
 
 void TimerConfiguration(void);
 void Timer0(void);
@@ -24,7 +26,6 @@ void Timer0(void) interrupt 1{
 }
 
 void main(void){
-	module5_Time = 0;
 	GPIO_LED_6 = 0XFE;
 	TimerConfiguration();
 	while(1)

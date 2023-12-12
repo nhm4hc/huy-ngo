@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/11/2023  19:13:03  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/12/2023  10:36:38  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -59,7 +59,7 @@ SEGMENT
   +--> ?PR?DS1302INIT?DS1302
   +--> ?PR?TIMER0CONFIGURATION?MAIN
   +--> ?PR?DS1302READTIME?DS1302
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  19:13:03  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/12/2023  10:36:38  PAGE 2
 
 
   +--> ?CO?MAIN
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  pro (?C_STARTUP)
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
   B:00A8H.7       PUBLIC        EA
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  19:13:03  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/12/2023  10:36:38  PAGE 3
 
 
   C:02B0H         PUBLIC        DIG_CODE_13
@@ -179,7 +179,7 @@ SYMBOL TABLE OF MODULE:  pro (?C_STARTUP)
   C:0184H         LINE#         55
   C:0184H         LINE#         56
   C:0187H         LINE#         57
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  19:13:03  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/12/2023  10:36:38  PAGE 4
 
 
   C:018AH         LINE#         58
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  pro (?C_STARTUP)
   C:0211H         LINE#         31
   C:0211H         LINE#         32
   C:0215H         LINE#         33
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  19:13:03  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/12/2023  10:36:38  PAGE 5
 
 
   C:0219H         LINE#         34
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  pro (?C_STARTUP)
   C:0181H         LINE#         87
   C:0183H         LINE#         88
   -------         ENDPROC       _DS1302READ
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/11/2023  19:13:03  PAGE 6
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/12/2023  10:36:38  PAGE 6
 
 
   -------         PROC          DS1302INIT

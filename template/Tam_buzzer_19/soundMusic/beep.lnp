@@ -1,4 +1,5 @@
 "STARTUP.obj",
-"beep.obj" 
+"beep.obj",
+"module_6.obj" 
 TO "beep" 
 RAMSIZE(256) 

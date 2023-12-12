@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              12/11/2023 19:05:47 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              12/12/2023 11:24:32 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
@@ -12,44 +12,45 @@ line level    source
    3          
    4          #define GPIO_LED_6 P2
    5          
-   6          unsigned char module5_Time;
+   6          extern unsigned char module5_Time;
    7          
-   8          void TimerConfiguration(void);
-   9          void Timer0(void);
-  10          
-  11          void TimerConfiguration(void){
-  12   1        TMOD = 0x01; 
-  13   1        TH0 = 0x3C;  
-  14   1        TL0 = 0xB0; 
-  15   1        EA = 1;      
-  16   1        ET0 = 1;     
-  17   1        TR0 = 1;     
-  18   1      }
-  19          
-  20          void Timer0(void) interrupt 1{
-  21   1        TH0 = 0x3C;  
-  22   1        TL0 = 0xB0;
-  23   1        module5_Time++;
-  24   1      }
-  25          
-  26          void main(void){
-  27   1        module5_Time = 0;
-  28   1        GPIO_LED_6 = 0XFE;
-  29   1        TimerConfiguration();
-  30   1        while(1)
-  31   1        {
-  32   2          if(module5_Time == 10)
-  33   2          {
-  34   3            GPIO_LED_6 =_crol_(GPIO_LED_6, 1);
-  35   3            module5_Time = 0;
-  36   3          }
-  37   2        }       
-  38   1      }  
-  39          
+   8          unsigned char module5_Time = 0;
+   9          
+  10          void TimerConfiguration(void);
+  11          void Timer0(void);
+  12          
+  13          void TimerConfiguration(void){
+  14   1        TMOD = 0x01; 
+  15   1        TH0 = 0x3C;  
+  16   1        TL0 = 0xB0; 
+  17   1        EA = 1;      
+  18   1        ET0 = 1;     
+  19   1        TR0 = 1;     
+  20   1      }
+  21          
+  22          void Timer0(void) interrupt 1{
+  23   1        TH0 = 0x3C;  
+  24   1        TL0 = 0xB0;
+  25   1        module5_Time++;
+  26   1      }
+  27          
+  28          void main(void){
+  29   1        GPIO_LED_6 = 0XFE;
+  30   1        TimerConfiguration();
+  31   1        while(1)
+  32   1        {
+  33   2          if(module5_Time == 10)
+  34   2          {
+  35   3            GPIO_LED_6 =_crol_(GPIO_LED_6, 1);
+  36   3            module5_Time = 0;
+  37   3          }
+  38   2        }       
+  39   1      }  
+  40          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     58    ----
+   CODE SIZE        =     55    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
